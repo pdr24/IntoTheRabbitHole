@@ -1,0 +1,78 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.left {
+    width: 40%;
+}
+
+.right {
+    width: 50%;
+}
+
+/* Ensure the canvas container is positioned correctly */
+.canvas-container {
+    position: relative;
+    width: 100%;
+    height: 80vh;
+}
+
+canvas {
+    width: 100%;    /* Set the width of the canvas to 100% of its container */
+    height: 100%;   /* Set the height of the canvas to match its container */
+    border: 1px solid #ccc;  /* Optional: Add a border for visibility */
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#rabbit-canvas {
+    z-index: 1;  /* Rabbit canvas on top of background */
+    pointer-events: none; /* Allow interactions through this canvas */
+}
+
+
+#tunnel-graph {
+    width: 100%;
+    height: 400px;
+    border: 1px solid #ccc;
+}
+
+#timer {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+#error-message {
+    color: red;
+    margin-top: 10px;
+}
+
+.hidden {
+    display: none;
+}
+
+.node {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 40px;
+    cursor: pointer;
+}
+
+.node.highlight {
+    background-color: yellow;
+}

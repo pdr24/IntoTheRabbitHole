@@ -12,14 +12,14 @@ canvas.height = 600; // Increased height for larger graph
 
 // Define nodes for a complex graph with dead ends and a fork
 const nodes = [
-    {x: 100, y: 100, label: 'A'},  
+    {x: 100, y: 100, label: 'Start'},  
     {x: 300, y: 100, label: 'B'},
     {x: 500, y: 100, label: 'C'},
     {x: 700, y: 100, label: 'D'},  
     {x: 200, y: 300, label: 'E'},
     {x: 400, y: 300, label: 'F'},  
     {x: 600, y: 300, label: 'G'},  
-    {x: 300, y: 500, label: 'H'},  
+    {x: 300, y: 500, label: 'Carrot'},  
     {x: 500, y: 500, label: 'I'},  
     {x: 100, y: 300, label: 'J'}   
 ];
@@ -119,8 +119,14 @@ function moveRabbit() {
     else {
         moveRabbitOnce(currentNode.x, currentNode.y, nodes[dfsPath[dfsPath.length - 1]].x, nodes[dfsPath[dfsPath.length - 1]].y)
     }
+    
     // Loop the rabbit movement every second
     setTimeout(moveRabbit, 1000);
+
+    // restart animation if carrot (goal state) has been reached
+    if (currentNode.label == "Carrot") { 
+        rabbitIndex = 0;
+    }
 }
 
 function drawRabbit(x, y) {

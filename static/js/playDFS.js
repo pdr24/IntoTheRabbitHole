@@ -118,6 +118,7 @@ function calculateAndSaveMetrics() {
     // save to browser cookies 
 }
 
+// TODO: do all of these and implement the methods above 
 // randomly select or generate puzzle 
 // draw graph according to puzzle 
 // load rabbit into starting point 

@@ -1,29 +1,118 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Into the Rabbit Hole - Page 1</title>
-    <link rel="stylesheet" href="static/css/styles.css">
+  <style>
+    body, html {
+      overflow: hidden;
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+
+    .container {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      object-fit: cover;
+    }
+
+    .form-container {
+      position: absolute;
+      width: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      margin-top: 20px;
+    }
+
+    input[type="text"], button {
+      padding: 1%;
+      font-size: 1.5vw;
+      margin-bottom: 1%;
+      width: 100%;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: 0.7;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="left">
-            <h1>Depth-First Search (DFS)</h1>
-            <p>
-                Depth-First Search (DFS) is an algorithm for traversing or searching tree or graph data structures.
-                The algorithm starts at the root node (or an arbitrary node) and explores as far as possible along each branch before backtracking.
-            </p>
-        </div>
-        <div class="right">
-            <h2>DFS Animation</h2>
-            <div class="canvas-container">
-                <canvas id="dfs-animation" width="800" height="600"></canvas>
-                <canvas id="rabbit-canvas" width="800" height="600"></canvas>
-            </div>
-        </div>
-    </div>
+  <div style="width: 100vw; height: 1vh; left: -1.5%; top: 25%; position: absolute; display: flex; justify-content: center; align-items: center; font-size: 5vw; text-align: center; color: white; text-shadow: 0.2vw -0.1vw 0.25vw #006400, 0.2vw -0.1vw 0.25vw #006400; font-family: 'Bradley Hand', cursive; z-index: 2;">
+    Into the Rabbit Hole --- Login
+  </div>  
+    
+  <!-- <img id="BackgroundImage" style="width: 100%; height: 100%; left: 0%; top: 0%; opacity: 50%; position: absolute" src="static/bgexample3.png" alt="Background Image" --> 
+   
+  <script>
+    function changeFontColor(inputId) {
+      document.getElementById(inputId).style.color = 'black';
+    }
 
-    <script src="static/js/dfs_animation.js"></script>
+    function validateForm() {
+      var input1 = document.getElementById("input1").value;
+      var input2 = document.getElementById("input2").value;
+      var input3 = document.getElementById("input3").value;
+      if (input1.trim() === '' || input2.trim() === '' || input3.trim() === '') {
+        alert("Please fill in all three fields.");
+        return false;
+      }
+
+      // save current user's info to local storage
+      addUser(input1, input2, input3);
+
+      // Redirect to instructions.html on successful validation
+      window.location.href = 'dfs_animation.html';
+  
+      return false; // Prevent form submission
+    }
+
+    /**
+     * Add new users to locally stored JSON object
+    **/
+    function addUser(firstName, lastInitial, ageRange) {
+        localStorage.setItem('fname', JSON.stringify(firstName));
+        localStorage.setItem('linitial', JSON.stringify(lastInitial));
+        localStorage.setItem('agerange', JSON.stringify(ageRange));
+    }
+
+
+  </script>
+
+  <div class="form-container">
+    <form id="stringForm" onsubmit="return validateForm()" method="post">
+      <input type="text" id="input1" name="input1" placeholder="Enter your first name" required 
+             oninput="changeFontColor('input1')" style="width: 45vw; height: 5vh; font-size: 25px; color: gray; border: 0.2vw solid #006400;"><br>
+      <input type="text" id="input2" name="input2" placeholder="Enter your last initial" required 
+             oninput="changeFontColor('input2')" style="width: 45vw; height: 5vh; font-size: 25px; color: gray; border: 0.2vw solid #006400;"><br>
+
+      <select id="input3" name="input3" required onchange="changeFontColor('input3')" 
+              style="width: 46vw; height: 5vh; margin-bottom: 10px; font-size: 20px; color: gray; left: 10%; border: 0.2vw solid #006400;">
+        <option value="" style="font-size: 22px; color: gray;" disabled selected>Select Age Range</option>
+        <option value="1" style="font-size: 22px; color: gray;">Less than 8</option>
+        <option value="2" style="font-size: 22px; color: gray;">8 to 10</option>
+        <option value="3" style="font-size: 22px; color: gray;">11 to 13</option>
+        <option value="4" style="font-size: 22px; color: gray;">14 to 16</option>
+        <option value="5" style="font-size: 22px; color: gray;">17+</option>
+
+
+      </select>
+
+      <button type="submit" style="width:46vw; height: 8vh; margin-top: 1vw; font-family: Bradley Hand; font-size: 2.7vw; border: 0.2vw solid #006400;">Login</button>
+    </form>
+  </div>
 </body>
 </html>

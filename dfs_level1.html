@@ -6,24 +6,21 @@
     <title>Into the Rabbit Hole - Page 1</title>
     <link rel="stylesheet" href="static/css/styles.css">
 </head>
-<body>
+<body data-page-id="level1">
+    <h1>Depth-First Search (DFS) - Level 1</h1>
+
     <div class="container">
-        <div class="left">
-            <h1>Depth-First Search (DFS)</h1>
+        <div class="left-small">
+            <h1>Instructions</h1>
             <p>
-                Depth-First Search (DFS) is an algorithm for searching through a graph/maze and find a path to the goal.
-                The algorithm starts at the starting node and explores as far as possible along each branch before backtracking. When it backtracks, it comes back to the last fork in the road it passed and tries the other path from there. 
+                    Help the rabbit find it's way to the carrot using Depth First Search. Click each node the rabbit needs to visit according to Depth First Search in order to find the carrot.            
             </p>
         </div>
         <div class="right">
-            <h2>DFS Animation</h2>
-            <div class="canvas-container">
-                <canvas id="dfs-animation" width="800" height="600"></canvas>
-                <canvas id="rabbit-canvas" width="800" height="600"></canvas>
-            </div>
+            <canvas id="rabbit-canvas" width="800" height="600"></canvas>
         </div>
     </div>
 
-    <script src="static/js/dfs_animation.js"></script>
+    <script src="static/js/playDFS.js"></script>
 </body>
 </html>

@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function() {
         console.log("This is Level 1");
         curr_level = 1;
     } 
-    else if (pageId === 'Level2') {
+    else if (pageId === 'level2') {
         console.log("This is Level 2");
         curr_level = 2;
     }
@@ -28,6 +28,7 @@ class TunnelSystem {
         // for this TunnelSystem object, determine the correct sequence of nodes to reach the goal according to DFS
         path = [];
         // find path 
+        // TODO: implement DFS algorithm to find the path 
 
         // update this.dfsPath accordingly 
         this.dfsPath = path;
@@ -103,8 +104,28 @@ function loadRabbit(puzzle) {
     // draw rabbit at starting position of the puzzle
 }
 
-function validateUserClick() {
+function validateUserClick(click, index, path) {
+    // if the user's click is the same as path[index] then true 
+    if (click == path[index]) {
+        return true; // proceed as normal
+    }
 
+    displayError(); // display error 
+    return false;
+}
+
+function displayError() {
+    // display error message or something if user clicks the wrong node
+    // for use within validateUserClick()
+}
+
+function checkIfCarrotReached(click, index, path) {
+    // check if user has correctly reached the end of the path 
+    if ((click == path[index]) && (index == path.length)) {
+        return true;
+    }
+
+    return false;
 }
 
 function carrotReached() {

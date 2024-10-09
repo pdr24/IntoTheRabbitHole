@@ -146,3 +146,11 @@ function calculateAndSaveMetrics() {
 // have var userAllClicks to keep track of the clicks the user has made 
 // have var userCorrectClicks to keep track of the correct selections to see how far along the path they are right now
 // validateUserClick will compare the user's click to what should be the next click according to puzzle 
+
+var puzzle = generatePuzzle(); // change it to hard coded puzzle at first if needed 
+drawGraph(puzzle); // draw puzzle as tunnel system 
+loadRabbit(puzzle); // draw rabbit at starting point of the tunnel according to puzzle 
+var userAllClicks = [];
+var userCorrectClicks  =[];
+
+// TODO: NEED TO FIGURE OUT HOW TO SET ONCLICK FUNCTIONS SO THAT THE GAME AUTOMATICALLY PROGRESSES

@@ -16,11 +16,11 @@ const nodes = [
     {x: 300, y: 100, label: 'B'},
     {x: 500, y: 100, label: 'C'},
     {x: 700, y: 100, label: 'D'},  
-    {x: 200, y: 300, label: 'E'},
-    {x: 400, y: 300, label: 'F'},  
-    {x: 600, y: 300, label: 'G'},  
-    {x: 300, y: 500, label: 'Carrot'},  
-    {x: 500, y: 500, label: 'I'},  
+    {x: 250, y: 300, label: 'E'},
+    {x: 450, y: 300, label: 'F'},  
+    {x: 650, y: 300, label: 'G'},  
+    {x: 350, y: 500, label: 'Carrot'},  
+    {x: 550, y: 500, label: 'I'},  
     {x: 100, y: 300, label: 'J'}   
 ];
 

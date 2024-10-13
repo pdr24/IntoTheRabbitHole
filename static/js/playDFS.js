@@ -1,4 +1,32 @@
-curr_level = 0; // keeps track of current level for use with game logic 
+var curr_level = 0; // keeps track of current level for use with game logic 
+
+const canvas = document.getElementById('tunnelsystem');
+const ctx = canvas.getContext('2d');
+
+const rabbitCanvas = document.getElementById('rabbit-canvas');
+const rabbitCtx = rabbitCanvas.getContext('2d');
+
+pathColor = "orange";
+
+// Custom style for nodes
+const nodeStyle = {
+    radius: 20,
+    fillColor: '#614939',  // light brown for node
+    strokeColor: '#614939', // light brown for node outline
+    labelColor: '#000',     // Black for labels
+    highlightFillColor: pathColor, // Highlighted node color
+};
+
+// Custom style for edges
+const edgeStyle = {
+    strokeColor: '#785c4a',  // lighter brown for edges
+    lineWidth: 40,
+    highlightColor: pathColor  // lighter brown for highlighted edges
+};
+
+// Adjust canvas size dynamically or use fixed size
+canvas.width = 800;  // Increased width for larger graph
+canvas.height = 600; // Increased height for larger graph
 
 // to read and update the current level 
 document.addEventListener("DOMContentLoaded", function() {
@@ -19,19 +47,19 @@ document.addEventListener("DOMContentLoaded", function() {
 class TunnelSystem {
 
     constructor(nodes_val = [], edges_val = []) {
-        this.nodes = nodes_val; // array of nodes
-        this.edges = edges_val; // array of edges
+        this._nodes = nodes_val; // array of nodes
+        this._edges = edges_val; // array of edges
         this.updateDFSPath(); // update dfs path based on nodes and edges 
     }
 
     updateDFSPath() {
         // for this TunnelSystem object, determine the correct sequence of nodes to reach the goal according to DFS
-        path = [];
+        var path = [];
         // find path 
         // TODO: implement DFS algorithm to find the path 
 
         // update this.dfsPath accordingly 
-        this.dfsPath = path;
+        this._dfsPath = path;
     }
 
     addNode(x, y, label) {
@@ -63,15 +91,15 @@ class TunnelSystem {
     }
 
     get nodes() {
-        return this.nodes;
+        return this._nodes;
     }
-
+     
     set nodes(newNodes) {
         this.nodes = newNodes;
-    }
+    } 
 
     get edges() {
-        return this.edges;
+        return this._edges;
     }
 
     set edges(newEdges) {
@@ -79,7 +107,7 @@ class TunnelSystem {
     }
 
     get dfsPath() {
-        return this.dfsPath;
+        return this._dfsPath;
     }
 
     set dfsPath(newPath) {
@@ -96,8 +124,35 @@ function generatePuzzle() {
 
 function drawGraph(puzzle) {
     // draw graph/tunel system based on the given puzzle 
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Draw edges (tunnels)
+    ctx.strokeStyle = edgeStyle.strokeColor;
+    ctx.lineWidth = edgeStyle.lineWidth;
+    puzzle.edges.forEach(edge => {
+        const [start, end] = edge;
+        ctx.beginPath();
+        ctx.moveTo(nodes[start].x, nodes[start].y);
+        ctx.lineTo(nodes[end].x, nodes[end].y);
+        ctx.stroke();
+    });
 
-    // each node should be a button with an onclick function validateUserClick()
+    // Draw nodes (tunnel points)
+    puzzle.nodes.forEach(node => {
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, nodeStyle.radius, 0, Math.PI * 2);
+        ctx.fillStyle = nodeStyle.fillColor;
+        ctx.fill();
+        ctx.strokeStyle = nodeStyle.strokeColor;
+        ctx.stroke();
+        
+        // Draw node label
+        ctx.fillStyle = nodeStyle.labelColor;
+        ctx.font = '16px Arial';
+        ctx.fillText(node.label, node.x - 5, node.y + 5);
+    });
+
+    // TODO: each node should be a button with an onclick function validateUserClick() !!!!!!!!!!!!!!!!!!!!
 }
 
 function loadRabbit(puzzle) {
@@ -147,7 +202,32 @@ function calculateAndSaveMetrics() {
 // have var userCorrectClicks to keep track of the correct selections to see how far along the path they are right now
 // validateUserClick will compare the user's click to what should be the next click according to puzzle 
 
-var puzzle = generatePuzzle(); // change it to hard coded puzzle at first if needed 
+// var puzzle = generatePuzzle(); // change it to hard coded puzzle at first if needed 
+
+const nodes = [
+    {x: 100, y: 100, label: 'Start'},  
+    {x: 300, y: 100, label: 'B'},
+    {x: 500, y: 100, label: 'C'},
+    {x: 700, y: 100, label: 'D'},  
+    {x: 250, y: 300, label: 'E'},
+    {x: 450, y: 300, label: 'F'},  
+    {x: 650, y: 300, label: 'G'},  
+    {x: 350, y: 500, label: 'Carrot'},  
+    {x: 550, y: 500, label: 'I'},  
+    {x: 100, y: 300, label: 'J'}   
+];
+
+// Define edges for the graph, including long paths, dead ends, and a fork
+const edges = [
+    [0, 1], [1, 2], [2, 3],  // Long path A -> B -> C -> D (dead end)
+    [0, 4], [4, 5],          // Path from A -> E -> F (fork point)
+    [5, 6],                  // F -> G (dead end)
+    [5, 7], [5, 8],          // Fork paths F -> H and F -> I
+    [4, 9],                  // E -> J (dead end)
+];
+
+var puzzle = new TunnelSystem(nodes, edges);
+
 drawGraph(puzzle); // draw puzzle as tunnel system 
 loadRabbit(puzzle); // draw rabbit at starting point of the tunnel according to puzzle 
 var userAllClicks = [];

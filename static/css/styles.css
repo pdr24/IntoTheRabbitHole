@@ -11,6 +11,13 @@ body {
     padding: 20px;
 }
 
+.container-dfs {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    height: 70vh
+}
+
 .left {
     width: 40%;
 }
@@ -71,6 +78,7 @@ body {
     position: absolute;
     z-index: 2; /* Ensure buttons are on top of both canvases */
     pointer-events: all; /* Make buttons clickable */
+    background-color: #123456;
 }
 
 canvas {
@@ -108,6 +116,18 @@ canvas {
 }
 
 .node {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 40px;
+    cursor: pointer;
+}
+
+.node-button {
     position: absolute;
     width: 40px;
     height: 40px;

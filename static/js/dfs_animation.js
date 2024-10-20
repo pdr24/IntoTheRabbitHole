@@ -124,7 +124,7 @@ function moveRabbit() {
     setTimeout(moveRabbit, 1000);
 
     // restart animation if carrot (goal state) has been reached
-    if (currentNode.label == "Carrot") { 
+    if (currentNode.label.includes("Carrot!)")) { 
         rabbitIndex = 0;
     }
 }

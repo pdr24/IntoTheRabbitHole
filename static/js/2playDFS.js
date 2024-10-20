@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function() {
     canvas.width = 800;
     canvas.height = 600;
 
+
     const pathColor = "orange";
 
     const nodeStyle = {
@@ -91,30 +92,109 @@ document.addEventListener("DOMContentLoaded", function() {
             ctx.font = '16px Arial';
             ctx.fillText(node.label, node.x - 10, node.y + 5);
 
-            // Create invisible button over each node
+        });
+    }
+
+    function drawButtons(puzzle) {
+        // Clear existing buttons
+        buttonContainer.innerHTML = '';
+
+        // Get the button container's dimensions
+        const containerWidth = buttonContainer.offsetWidth;
+        const containerHeight = buttonContainer.offsetHeight;
+
+        // Get the original graph dimensions (used for scaling)
+        const originalWidth = 800; // Original width of the graph
+        const originalHeight = 600; // Original height of the graph
+
+        // Draw nodes and create buttons
+        puzzle.nodes.forEach((node, index) => {
+            // Scale the node position relative to the container size
+            const scaledX = (node.x / originalWidth) * containerWidth;
+            const scaledY = (node.y / originalHeight) * containerHeight;
+
+            // Create a button for each node
             const button = document.createElement('button');
-            button.className = 'node-button';
             button.style.position = 'absolute';
-            button.style.left = `${node.x - nodeStyle.radius}px`;
-            button.style.top = `${node.y - nodeStyle.radius}px`;
-            button.style.width = `${nodeStyle.radius * 2}px`;
-            button.style.height = `${nodeStyle.radius * 2}px`;
-            button.style.backgroundColor = 'transparent';
+            button.style.left = `${scaledX - nodeStyle.radius * 2}px`;
+            button.style.top = `${scaledY - nodeStyle.radius * 2}px`;
+            button.style.width = `${nodeStyle.radius * 4}px`;
+            button.style.height = `${nodeStyle.radius * 4}px`;
+            button.style.borderRadius = '50%';  // Make the button circular
+            button.style.backgroundColor = nodeStyle.fillColor;
+            button.style.backgroundColor = "green";
             button.style.border = 'none';
             button.style.cursor = 'pointer';
+            button.textContent = node.label;
 
             button.onclick = () => {
                 nodeClicked(node, index);
             };
 
-            // Append button to the button-container instead of the body
+            // Append button to the button-container
             buttonContainer.appendChild(button);
         });
     }
+
+    function drawEdges(puzzle) {
+        // Clear any existing elements in the button container
+        // buttonContainer.innerHTML = '';
+    
+        // Get the container's current dimensions
+        const containerWidth = buttonContainer.offsetWidth;
+        const containerHeight = buttonContainer.offsetHeight;
+    
+        // Original graph dimensions
+        const originalWidth = 800;
+        const originalHeight = 600;
+    
+        // Draw edges as unclickable buttons
+        puzzle.edges.forEach(edge => {
+            const [startIndex, endIndex] = edge;
+            const startNode = puzzle.nodes[startIndex];
+            const endNode = puzzle.nodes[endIndex];
+    
+            // Scale positions relative to the container
+            const scaledStartX = (startNode.x / originalWidth) * containerWidth;
+            const scaledStartY = (startNode.y / originalHeight) * containerHeight;
+            const scaledEndX = (endNode.x / originalWidth) * containerWidth;
+            const scaledEndY = (endNode.y / originalHeight) * containerHeight;
+    
+            // Calculate distance and angle between the start and end nodes
+            const deltaX = scaledEndX - scaledStartX;
+            const deltaY = scaledEndY - scaledStartY;
+            const length = Math.sqrt(deltaX * deltaX + deltaY * deltaY);  // Length of the edge
+            const angle = Math.atan2(deltaY, deltaX);  // Angle between the two nodes
+    
+            // Create an edge button
+            const edgeButton = document.createElement('div');
+            edgeButton.style.position = 'absolute';
+            edgeButton.style.backgroundColor = edgeStyle.strokeColor;  // Set edge color
+            edgeButton.style.backgroundColor = "pink"; // remove later 
+            edgeButton.style.height = `${edgeStyle.lineWidth}px`;  // Set the thickness of the edge
+            edgeButton.style.width = `${length}px`;  // Set the length of the edge
+            edgeButton.style.left = `${scaledStartX}px`;  // Position at the start node
+            edgeButton.style.top = `${scaledStartY}px`;   // Position at the start node
+            edgeButton.style.transformOrigin = '0 0';  // Rotate from the start node
+            edgeButton.style.transform = `rotate(${angle}rad)`;  // Rotate to align with the end node
+            edgeButton.style.pointerEvents = 'none';  // Make it unclickable
+    
+            // Append the edge button to the button container
+            buttonContainer.appendChild(edgeButton);
+        });
+    }
+
+    function drawGraphAsButtons(puzzle) {
+        buttonContainer.innerHTML = '';
+        drawButtons(puzzle);
+        drawEdges(puzzle);
+    }
+    
 
     function nodeClicked(node, index) {
         console.log(`Node ${node.label} clicked!`);
     }
 
     drawGraph(puzzle);
+    drawGraphAsButtons(puzzle);
 });

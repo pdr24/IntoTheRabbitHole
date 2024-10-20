@@ -263,3 +263,5 @@ document.addEventListener("DOMContentLoaded", function() {
     var userAllClicks = [];
     var userCorrectClicks  =[];
 });
+
+// TODO: CONSOLIDATE 2PLAYDFS AND PLAYDFS AND THEN DELETE ONE OF THEM !!!!!!!!!!!!!!!!!

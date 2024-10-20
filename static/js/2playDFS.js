@@ -1,3 +1,21 @@
+var curr_level = 0; // keeps track of current level for use with game logic 
+
+
+// to read and update the current level 
+document.addEventListener("DOMContentLoaded", function() {
+    const pageBody = document.body;
+    const pageId = pageBody.getAttribute('data-page-id');  // Get the page-specific value
+
+    if (pageId === 'level1') {
+        console.log("This is Level 1");
+        curr_level = 1;
+    } 
+    else if (pageId === 'level2') {
+        console.log("This is Level 2");
+        curr_level = 2;
+    }
+});
+
 document.addEventListener("DOMContentLoaded", function() {
     const canvas = document.getElementById('tunnelsystem');
     const buttonContainer = document.querySelector('.button-container'); // Get button container
@@ -20,24 +38,75 @@ document.addEventListener("DOMContentLoaded", function() {
         lineWidth: 40,
     };
 
+    // class representing the tunnel system (graph)
     class TunnelSystem {
+
         constructor(nodes_val = [], edges_val = []) {
-            this._nodes = nodes_val;
-            this._edges = edges_val;
-            this.updateDFSPath();
+            this._nodes = nodes_val; // array of nodes
+            this._edges = edges_val; // array of edges
+            this.updateDFSPath(); // update dfs path based on nodes and edges 
         }
 
         updateDFSPath() {
+            // for this TunnelSystem object, determine the correct sequence of nodes to reach the goal according to DFS
             var path = [];
+            // find path 
+            // TODO: implement DFS algorithm to find the path !!!
+
+            // update this.dfsPath accordingly 
             this._dfsPath = path;
+        }
+
+        addNode(x, y, label) {
+            this.nodes.push({ x, y, label });
+            this.updateDFSPath();
+        }
+
+        addEdge(node1Index, node2Index) {
+            if (node1Index < this.nodes.length && node2Index < this.nodes.length) {
+                this.edges.push([node1Index, node2Index]);
+                this.updateDFSPath();
+            } 
+            else {
+                console.log('Error: One or both of the node indices do not exist.');
+            }
+        }
+
+        addEdgeByLabels(label1, label2) {
+            const node1Index = this.nodes.findIndex(node => node.label === label1);
+            const node2Index = this.nodes.findIndex(node => node.label === label2);
+
+            // Check if both nodes were found
+            if (node1Index !== -1 && node2Index !== -1) {
+                this.addEdge(node1Index, node2Index);  // Reuse addEdge by index
+            } 
+            else {
+                console.log(`Error: One or both of the node labels do not exist. Node1: ${label1}, Node2: ${label2}`);
+            }
         }
 
         get nodes() {
             return this._nodes;
         }
+        
+        set nodes(newNodes) {
+            this.nodes = newNodes;
+        } 
 
         get edges() {
             return this._edges;
+        }
+
+        set edges(newEdges) {
+            this.edges = newEdges;
+        }
+
+        get dfsPath() {
+            return this._dfsPath;
+        }
+
+        set dfsPath(newPath) {
+            this.dfsPath = newPath;
         }
     }
 
@@ -60,40 +129,15 @@ document.addEventListener("DOMContentLoaded", function() {
         [5, 7], [5, 8], [4, 9]
     ];
 
-    var puzzle = new TunnelSystem(nodes, edges);
-
-    function drawGraph(puzzle) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        // Draw edges
-        ctx.strokeStyle = edgeStyle.strokeColor;
-        ctx.lineWidth = edgeStyle.lineWidth;
-        puzzle.edges.forEach(edge => {
-            const [start, end] = edge;
-            ctx.beginPath();
-            ctx.moveTo(puzzle.nodes[start].x, puzzle.nodes[start].y);
-            ctx.lineTo(puzzle.nodes[end].x, puzzle.nodes[end].y);
-            ctx.stroke();
-        });
-
-        // Get canvas position relative to the page
-        const canvasRect = canvas.getBoundingClientRect();
-
-        // Draw nodes and create buttons
-        puzzle.nodes.forEach((node, index) => {
-            ctx.beginPath();
-            ctx.arc(node.x, node.y, nodeStyle.radius, 0, Math.PI * 2);
-            ctx.fillStyle = nodeStyle.fillColor;
-            ctx.fill();
-            ctx.strokeStyle = nodeStyle.strokeColor;
-            ctx.stroke();
-
-            ctx.fillStyle = nodeStyle.labelColor;
-            ctx.font = '16px Arial';
-            ctx.fillText(node.label, node.x - 10, node.y + 5);
-
-        });
+    // TODO: to be implemented later... start with a hard coded graph for now
+    function generatePuzzle() {
+        // randomly generate a puzzle 
+        // store it as graph
+        // return puzzle graph 
     }
+
+
+    var puzzle = new TunnelSystem(nodes, edges);
 
     function drawButtons(puzzle) {
         // Clear existing buttons
@@ -137,64 +181,85 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function drawEdges(puzzle) {
-        // Clear any existing elements in the button container
-        // buttonContainer.innerHTML = '';
-    
-        // Get the container's current dimensions
-        const containerWidth = buttonContainer.offsetWidth;
-        const containerHeight = buttonContainer.offsetHeight;
-    
-        // Original graph dimensions
-        const originalWidth = 800;
-        const originalHeight = 600;
-    
-        // Draw edges as unclickable buttons
+        // Draw edges
+        ctx.strokeStyle = edgeStyle.strokeColor;
+        ctx.lineWidth = edgeStyle.lineWidth;
         puzzle.edges.forEach(edge => {
-            const [startIndex, endIndex] = edge;
-            const startNode = puzzle.nodes[startIndex];
-            const endNode = puzzle.nodes[endIndex];
-    
-            // Scale positions relative to the container
-            const scaledStartX = (startNode.x / originalWidth) * containerWidth;
-            const scaledStartY = (startNode.y / originalHeight) * containerHeight;
-            const scaledEndX = (endNode.x / originalWidth) * containerWidth;
-            const scaledEndY = (endNode.y / originalHeight) * containerHeight;
-    
-            // Calculate distance and angle between the start and end nodes
-            const deltaX = scaledEndX - scaledStartX;
-            const deltaY = scaledEndY - scaledStartY;
-            const length = Math.sqrt(deltaX * deltaX + deltaY * deltaY);  // Length of the edge
-            const angle = Math.atan2(deltaY, deltaX);  // Angle between the two nodes
-    
-            // Create an edge button
-            const edgeButton = document.createElement('div');
-            edgeButton.style.position = 'absolute';
-            edgeButton.style.backgroundColor = edgeStyle.strokeColor;  // Set edge color
-            edgeButton.style.backgroundColor = "pink"; // remove later 
-            edgeButton.style.height = `${edgeStyle.lineWidth}px`;  // Set the thickness of the edge
-            edgeButton.style.width = `${length}px`;  // Set the length of the edge
-            edgeButton.style.left = `${scaledStartX}px`;  // Position at the start node
-            edgeButton.style.top = `${scaledStartY}px`;   // Position at the start node
-            edgeButton.style.transformOrigin = '0 0';  // Rotate from the start node
-            edgeButton.style.transform = `rotate(${angle}rad)`;  // Rotate to align with the end node
-            edgeButton.style.pointerEvents = 'none';  // Make it unclickable
-    
-            // Append the edge button to the button container
-            buttonContainer.appendChild(edgeButton);
+            const [start, end] = edge;
+            ctx.beginPath();
+            ctx.moveTo(puzzle.nodes[start].x, puzzle.nodes[start].y);
+            ctx.lineTo(puzzle.nodes[end].x, puzzle.nodes[end].y);
+            ctx.stroke();
         });
     }
 
-    function drawGraphAsButtons(puzzle) {
+    function drawGraph(puzzle) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         buttonContainer.innerHTML = '';
         drawButtons(puzzle);
         drawEdges(puzzle);
     }
     
-
     function nodeClicked(node, index) {
         console.log(`Node ${node.label} clicked!`);
     }
 
-    drawGraph(puzzle);
-    drawGraphAsButtons(puzzle);
+    function loadRabbit(puzzle) {
+        // draw rabbit at starting position of the puzzle
+    }
+    
+    function validateUserClick(click, index, path) {
+        // if the user's click is the same as path[index] then true 
+        if (click == path[index]) {
+            return true; // proceed as normal
+        }
+    
+        displayError(); // display error 
+        return false;
+    }
+    
+    function displayError() {
+        // display error message or something if user clicks the wrong node
+        // for use within validateUserClick()
+    }
+    
+    function checkIfCarrotReached(click, index, path) {
+        // check if user has correctly reached the end of the path 
+        if ((click == path[index]) && (index == path.length)) {
+            return true;
+        }
+    
+        return false;
+    }
+    
+    function carrotReached() {
+        // display success message 
+        calculateAndSaveMetrics();
+        // show option to go the next level 
+    }
+    
+    function calculateAndSaveMetrics() {
+        // calculate any metrics (like accuracy, time on puzzle, etc)
+        // save to browser cookies 
+    }
+
+    // TODO: do all of these and implement the methods above 
+    // randomly select or generate puzzle 
+    // draw graph according to puzzle 
+    // load rabbit into starting point 
+    // have var userAllClicks to keep track of the clicks the user has made 
+    // have var userCorrectClicks to keep track of the correct selections to see how far along the path they are right now
+    // validateUserClick will compare the user's click to what should be the next click according to puzzle 
+
+    // var puzzle = generatePuzzle(); // change it to hard coded puzzle at first if needed 
+
+
+    //drawGraph(puzzle);
+
+    var puzzle = new TunnelSystem(nodes, edges);
+
+    drawGraph(puzzle); // draw puzzle as tunnel system 
+    loadRabbit(puzzle); // draw rabbit at starting point of the tunnel according to puzzle 
+    var userAllClicks = [];
+    var userCorrectClicks  =[];
 });

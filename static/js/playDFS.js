@@ -122,38 +122,73 @@ function generatePuzzle() {
     // return puzzle graph 
 }
 
-function drawGraph(puzzle) {
-    // draw graph/tunel system based on the given puzzle 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-    // Draw edges (tunnels)
+
+function drawButtons(puzzle) {
+    // Clear existing buttons
+    buttonContainer.innerHTML = '';
+
+    // Get the button container's dimensions
+    const containerWidth = buttonContainer.offsetWidth;
+    const containerHeight = buttonContainer.offsetHeight;
+
+    // Get the original graph dimensions (used for scaling)
+    const originalWidth = 800; // Original width of the graph
+    const originalHeight = 600; // Original height of the graph
+
+    // Draw nodes and create buttons
+    puzzle.nodes.forEach((node, index) => {
+        // Scale the node position relative to the container size
+        const scaledX = (node.x / originalWidth) * containerWidth;
+        const scaledY = (node.y / originalHeight) * containerHeight;
+
+        // Create a button for each node
+        const button = document.createElement('button');
+        button.style.position = 'absolute';
+        button.style.left = `${scaledX - nodeStyle.radius * 2}px`;
+        button.style.top = `${scaledY - nodeStyle.radius * 2}px`;
+        button.style.width = `${nodeStyle.radius * 4}px`;
+        button.style.height = `${nodeStyle.radius * 4}px`;
+        button.style.borderRadius = '50%';  // Make the button circular
+        button.style.backgroundColor = nodeStyle.fillColor;
+        button.style.backgroundColor = "green";
+        button.style.border = 'none';
+        button.style.cursor = 'pointer';
+        button.textContent = node.label;
+
+        button.onclick = () => {
+            nodeClicked(node, index);
+        };
+
+        // Append button to the button-container
+        buttonContainer.appendChild(button);
+    });
+}
+
+function drawEdges(puzzle) {
+    // Draw edges
     ctx.strokeStyle = edgeStyle.strokeColor;
     ctx.lineWidth = edgeStyle.lineWidth;
     puzzle.edges.forEach(edge => {
         const [start, end] = edge;
         ctx.beginPath();
-        ctx.moveTo(nodes[start].x, nodes[start].y);
-        ctx.lineTo(nodes[end].x, nodes[end].y);
+        ctx.moveTo(puzzle.nodes[start].x, puzzle.nodes[start].y);
+        ctx.lineTo(puzzle.nodes[end].x, puzzle.nodes[end].y);
         ctx.stroke();
     });
-
-    // Draw nodes (tunnel points)
-    puzzle.nodes.forEach(node => {
-        ctx.beginPath();
-        ctx.arc(node.x, node.y, nodeStyle.radius, 0, Math.PI * 2);
-        ctx.fillStyle = nodeStyle.fillColor;
-        ctx.fill();
-        ctx.strokeStyle = nodeStyle.strokeColor;
-        ctx.stroke();
-        
-        // Draw node label
-        ctx.fillStyle = nodeStyle.labelColor;
-        ctx.font = '16px Arial';
-        ctx.fillText(node.label, node.x - 5, node.y + 5);
-    });
-
-    // TODO: each node should be a button with an onclick function validateUserClick() !!!!!!!!!!!!!!!!!!!!
 }
+
+function drawGraph(puzzle) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    buttonContainer.innerHTML = '';
+    drawButtons(puzzle);
+    drawEdges(puzzle);
+}
+
+function nodeClicked(node, index) {
+    console.log(`Node ${node.label} clicked!`);
+}
+
+drawGraph(puzzle);
 
 function loadRabbit(puzzle) {
     // draw rabbit at starting position of the puzzle

@@ -428,7 +428,7 @@ document.addEventListener("DOMContentLoaded", function() {
     //drawGraph(puzzle);
 
     var puzzle = new TunnelSystem(nodes, edges);
-    puzzle.updateDFSPath();
+    console.log(puzzle.dfsPath); // for testing purposes 
     
     drawGraph(puzzle); // draw puzzle as tunnel system 
     loadRabbitToStart(puzzle); // draw rabbit at starting point of the tunnel according to puzzle 
@@ -436,7 +436,6 @@ document.addEventListener("DOMContentLoaded", function() {
     var userCorrectClicks = [];
     var currIndex = 1; // start at 1 b/c dfsPath has 'Start' at index = 0 
 
-    console.log(puzzle.dfsPath); // for testing purposes 
 });
 
 // TODO: check the updateDFSPath function on other graphs 

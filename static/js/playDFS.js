@@ -471,3 +471,4 @@ document.addEventListener("DOMContentLoaded", function() {
 // TODO: check the updateDFSPath function on other graphs 
 // TODO: make error message show up above rabbit image 
 // TODO: add data saving 
+// TODO: add better styling overall lol 

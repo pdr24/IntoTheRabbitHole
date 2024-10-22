@@ -434,7 +434,7 @@ document.addEventListener("DOMContentLoaded", function() {
     loadRabbitToStart(puzzle); // draw rabbit at starting point of the tunnel according to puzzle 
     var userAllClicks = [];
     var userCorrectClicks = [];
-    var currIndex = 1; 
+    var currIndex = 1; // start at 1 b/c dfsPath has 'Start' at index = 0 
 
     console.log(puzzle.dfsPath); // for testing purposes 
 });

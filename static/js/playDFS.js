@@ -51,13 +51,40 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         updateDFSPath() {
-            // for this TunnelSystem object, determine the correct sequence of nodes to reach the goal according to DFS
-            var path = [];
-            // find path 
-            // TODO: implement DFS algorithm to find the path !!!
+            const visited = new Array(nodes.length).fill(false); // To keep track of visited nodes
+            const dfsPath = []; // To store the final DFS path
+            const nodeCount = nodes.length;
 
-            // update this.dfsPath accordingly 
-            this._dfsPath = path;
+            const adjacencyList = Array.from({ length: nodeCount }, () => []);
+
+            // Add edges to the adjacency list
+            for (const [start, end] of edges) {
+                adjacencyList[start].push(end);
+                adjacencyList[end].push(start); // Since it's an undirected graph
+            }
+
+            // Helper function to perform DFS
+            function dfs(currentNode) {
+                // Mark the current node as visited and add it to the path
+                visited[currentNode] = true;
+                dfsPath.push(currentNode);
+
+                // Explore neighbors of the current node
+                const neighbors = adjacencyList[currentNode];
+                for (const neighbor of neighbors) {
+                    if (!visited[neighbor]) {
+                        dfs(neighbor);
+                        // Backtrack to the current node after visiting a neighbor
+                        dfsPath.push(currentNode);
+                    }
+                }
+            }
+
+            // Perform DFS starting from node 0 (assuming 0 is the starting node)
+            dfs(0);
+
+            const pathLabels = dfsPath.map(index => nodes[index].label);
+            this._dfsPath = pathLabels;
         }
 
         addNode(x, y, label) {
@@ -396,4 +423,7 @@ document.addEventListener("DOMContentLoaded", function() {
     loadRabbitToStart(puzzle); // draw rabbit at starting point of the tunnel according to puzzle 
     var userAllClicks = [];
     var userCorrectClicks = [];
+    console.log(puzzle.dfsPath);
 });
+
+// TODO: check the updateDFSPath function on other graphs 

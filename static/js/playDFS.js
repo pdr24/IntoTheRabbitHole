@@ -207,8 +207,86 @@ document.addEventListener("DOMContentLoaded", function() {
     
     function nodeClicked(node, index) {
         console.log(`Node ${node.label} clicked!`);
+        isUserClickValid = false; // for now to test the else branch 
+
+        if (isUserClickValid) { // user's click was correct 
+
+        }
+        else { // user click was incorrect 
+            showErrorOnCanvas(node.label);
+            // TODO: update required vars to track user correctness and progress as needed 
+        }
     }
 
+    function showErrorOnCanvas(label) {
+        const canvasRect = canvas.getBoundingClientRect();  // Get the actual size and position of the canvas
+        const canvasWidth = canvasRect.width;
+        const canvasHeight = canvasRect.height;
+    
+        // Create the button
+        const button = document.createElement('button');
+        button.innerHTML = label + " was the wrong node. Try again";
+        button.style.position = 'absolute';
+
+        const buttonWidth = 400;
+        const buttonHeight = 300;
+        button.style.left = `${(canvasWidth / 2) - (buttonWidth / 2)}px`;  
+        button.style.top = `${(canvasHeight / 2) - (buttonHeight / 2)}px`;  
+        button.style.width = `${buttonWidth}px`;
+        button.style.height = `${buttonHeight}px`;
+
+        button.style.backgroundColor = "white";
+        button.style.borderRadius = '20px';
+        button.style.outlineColor = "black";
+
+        button.style.fontSize = '24px';
+
+        button.style.cursor = 'pointer';
+    
+        // Append the button to the button container, positioned relative to the canvas
+        buttonContainer.appendChild(button);
+
+        // Create the button
+        const errorBackground = document.createElement('button');
+        errorBackground.style.position = 'absolute';
+
+        const errorBackgroundWidth = canvasWidth;
+        const errorBackgroundHeight = canvasHeight;
+        errorBackground.style.left = `${(canvasWidth / 2) - (errorBackgroundWidth / 2)}px`;  
+        errorBackground.style.top = `${(canvasHeight / 2) - (errorBackgroundHeight / 2)}px`;  
+        errorBackground.style.width = `${errorBackgroundWidth}px`;
+        errorBackground.style.height = `${errorBackgroundHeight}px`;
+
+        errorBackground.style.backgroundColor = "rgba(255, 255, 255, 0.3)";
+        errorBackground.style.borderRadius = '20px';
+        errorBackground.style.outlineColor = "black";
+
+        errorBackground.style.cursor = 'pointer';
+    
+        // Append the button to the button container, positioned relative to the canvas
+        buttonContainer.appendChild(errorBackground);
+        buttonContainer.appendChild(button);
+
+        // Event listener for clicking outside the button
+        function clickToRemoveErrorMessage(event) {
+            if (errorBackground.contains(event.target)) {
+                // Remove the button if the click is outside
+                buttonContainer.removeChild(errorBackground);
+                buttonContainer.removeChild(button);
+                buttonContainer.removeEventListener('click', clickToRemoveErrorMessage); 
+            }
+        }
+
+        // Add the event listener to detect clicks outside the button
+        document.addEventListener('click', clickToRemoveErrorMessage);
+
+        // Remove the buttons after 3 seconds
+        setTimeout(() => {
+            buttonContainer.removeChild(button);
+            buttonContainer.removeChild(errorBackground);
+        }, 3000);  // 3 seconds
+    }
+    
     function drawRabbit(x, y) {
         const rabbitImage = new Image();  // Create a new image object
         rabbitImage.src = 'static/assets/rabbit.png';  // Set the source to the rabbit image path
@@ -264,7 +342,7 @@ document.addEventListener("DOMContentLoaded", function() {
         drawRabbit(newX, newY);
     }
     
-    function validateUserClick(click, index, path) {
+    function isUserClickValid(click, index, path) {
         // if the user's click is the same as path[index] then true 
         if (click == path[index]) {
             return true; // proceed as normal
@@ -317,5 +395,5 @@ document.addEventListener("DOMContentLoaded", function() {
     drawGraph(puzzle); // draw puzzle as tunnel system 
     loadRabbitToStart(puzzle); // draw rabbit at starting point of the tunnel according to puzzle 
     var userAllClicks = [];
-    var userCorrectClicks  =[];
+    var userCorrectClicks = [];
 });

@@ -1,33 +1,5 @@
 var curr_level = 0; // keeps track of current level for use with game logic 
 
-const canvas = document.getElementById('tunnelsystem');
-const ctx = canvas.getContext('2d');
-
-const rabbitCanvas = document.getElementById('rabbit-canvas');
-const rabbitCtx = rabbitCanvas.getContext('2d');
-
-pathColor = "orange";
-
-// Custom style for nodes
-const nodeStyle = {
-    radius: 20,
-    fillColor: '#614939',  // light brown for node
-    strokeColor: '#614939', // light brown for node outline
-    labelColor: '#000',     // Black for labels
-    highlightFillColor: pathColor, // Highlighted node color
-};
-
-// Custom style for edges
-const edgeStyle = {
-    strokeColor: '#785c4a',  // lighter brown for edges
-    lineWidth: 40,
-    highlightColor: pathColor  // lighter brown for highlighted edges
-};
-
-// Adjust canvas size dynamically or use fixed size
-canvas.width = 800;  // Increased width for larger graph
-canvas.height = 600; // Increased height for larger graph
-
 // to read and update the current level 
 document.addEventListener("DOMContentLoaded", function() {
     const pageBody = document.body;
@@ -43,229 +15,304 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
-// class representing the tunnel system (graph)
-class TunnelSystem {
+document.addEventListener("DOMContentLoaded", function() {
+    const canvas = document.getElementById('tunnelsystem');
+    const buttonContainer = document.querySelector('.button-container'); // Get button container
+    const ctx = canvas.getContext('2d');
 
-    constructor(nodes_val = [], edges_val = []) {
-        this._nodes = nodes_val; // array of nodes
-        this._edges = edges_val; // array of edges
-        this.updateDFSPath(); // update dfs path based on nodes and edges 
-    }
+    const rabbitCanvas = document.getElementById('rabbit-canvas'); // get rabbit canvas for drawing the rabbit
+    const rabbitCtx = rabbitCanvas.getContext('2d');
 
-    updateDFSPath() {
-        // for this TunnelSystem object, determine the correct sequence of nodes to reach the goal according to DFS
-        var path = [];
-        // find path 
-        // TODO: implement DFS algorithm to find the path !!!
+    canvas.width = 800;
+    canvas.height = 600;
 
-        // update this.dfsPath accordingly 
-        this._dfsPath = path;
-    }
+    const pathColor = "orange";
 
-    addNode(x, y, label) {
-        this.nodes.push({ x, y, label });
-        this.updateDFSPath();
-    }
+    const nodeStyle = {
+        radius: 20,
+        fillColor: '#614939',
+        strokeColor: '#614939',
+        labelColor: '#000',
+    };
 
-    addEdge(node1Index, node2Index) {
-        if (node1Index < this.nodes.length && node2Index < this.nodes.length) {
-            this.edges.push([node1Index, node2Index]);
+    const edgeStyle = {
+        strokeColor: '#785c4a',
+        lineWidth: 40,
+    };
+
+    // class representing the tunnel system (graph)
+    class TunnelSystem {
+
+        constructor(nodes_val = [], edges_val = []) {
+            this._nodes = nodes_val; // array of nodes
+            this._edges = edges_val; // array of edges
+            this.updateDFSPath(); // update dfs path based on nodes and edges 
+        }
+
+        updateDFSPath() {
+            // for this TunnelSystem object, determine the correct sequence of nodes to reach the goal according to DFS
+            var path = [];
+            // find path 
+            // TODO: implement DFS algorithm to find the path !!!
+
+            // update this.dfsPath accordingly 
+            this._dfsPath = path;
+        }
+
+        addNode(x, y, label) {
+            this.nodes.push({ x, y, label });
             this.updateDFSPath();
+        }
+
+        addEdge(node1Index, node2Index) {
+            if (node1Index < this.nodes.length && node2Index < this.nodes.length) {
+                this.edges.push([node1Index, node2Index]);
+                this.updateDFSPath();
+            } 
+            else {
+                console.log('Error: One or both of the node indices do not exist.');
+            }
+        }
+
+        addEdgeByLabels(label1, label2) {
+            const node1Index = this.nodes.findIndex(node => node.label === label1);
+            const node2Index = this.nodes.findIndex(node => node.label === label2);
+
+            // Check if both nodes were found
+            if (node1Index !== -1 && node2Index !== -1) {
+                this.addEdge(node1Index, node2Index);  // Reuse addEdge by index
+            } 
+            else {
+                console.log(`Error: One or both of the node labels do not exist. Node1: ${label1}, Node2: ${label2}`);
+            }
+        }
+
+        get nodes() {
+            return this._nodes;
+        }
+        
+        set nodes(newNodes) {
+            this.nodes = newNodes;
         } 
-        else {
-            console.log('Error: One or both of the node indices do not exist.');
+
+        get edges() {
+            return this._edges;
+        }
+
+        set edges(newEdges) {
+            this.edges = newEdges;
+        }
+
+        get dfsPath() {
+            return this._dfsPath;
+        }
+
+        set dfsPath(newPath) {
+            this.dfsPath = newPath;
         }
     }
 
-    addEdgeByLabels(label1, label2) {
-        const node1Index = this.nodes.findIndex(node => node.label === label1);
-        const node2Index = this.nodes.findIndex(node => node.label === label2);
+    const nodes = [
+        {x: 100, y: 100, label: 'Start'},  
+        {x: 300, y: 100, label: 'B'},
+        {x: 500, y: 150, label: 'C'},
+        {x: 700, y: 100, label: 'D'},  
+        {x: 300, y: 300, label: 'E'},
+        {x: 500, y: 300, label: 'F'},  
+        {x: 700, y: 300, label: 'G'},  
+        {x: 400, y: 500, label: 'Carrot'},  
+        {x: 600, y: 500, label: 'I'},  
+        {x: 100, y: 300, label: 'J'}
+    ];
 
-        // Check if both nodes were found
-        if (node1Index !== -1 && node2Index !== -1) {
-            this.addEdge(node1Index, node2Index);  // Reuse addEdge by index
-        } 
-        else {
-            console.log(`Error: One or both of the node labels do not exist. Node1: ${label1}, Node2: ${label2}`);
-        }
+    const edges = [
+        [0, 1], [1, 2], [2, 3],
+        [0, 4], [4, 5], [5, 6],
+        [5, 7], [5, 8], [4, 9]
+    ];
+
+    // TODO: to be implemented later... start with a hard coded graph for now
+    function generatePuzzle() {
+        // randomly generate a puzzle 
+        // store it as graph
+        // return puzzle graph 
     }
 
-    get nodes() {
-        return this._nodes;
+
+    var puzzle = new TunnelSystem(nodes, edges);
+
+    function drawButtons(puzzle) {
+        // Clear existing buttons
+        buttonContainer.innerHTML = '';
+
+        // Get the button container's dimensions
+        const containerWidth = buttonContainer.offsetWidth;
+        const containerHeight = buttonContainer.offsetHeight;
+
+        // Get the original graph dimensions (used for scaling)
+        const originalWidth = 800; // Original width of the graph
+        const originalHeight = 600; // Original height of the graph
+
+        // Draw nodes and create buttons
+        puzzle.nodes.forEach((node, index) => {
+            // Scale the node position relative to the container size
+            const scaledX = (node.x / originalWidth) * containerWidth;
+            const scaledY = (node.y / originalHeight) * containerHeight;
+
+            // Create a button for each node
+            const button = document.createElement('button');
+            button.style.position = 'absolute';
+            button.style.left = `${scaledX - nodeStyle.radius * 2}px`;
+            button.style.top = `${scaledY - nodeStyle.radius * 2}px`;
+            button.style.width = `${nodeStyle.radius * 4}px`;
+            button.style.height = `${nodeStyle.radius * 4}px`;
+            button.style.borderRadius = '50%';  // Make the button circular
+            button.style.backgroundColor = nodeStyle.fillColor;
+            button.style.border = 'none';
+            button.style.cursor = 'pointer';
+            button.textContent = node.label;
+
+            button.onclick = () => {
+                nodeClicked(node, index);
+            };
+
+            // Append button to the button-container
+            buttonContainer.appendChild(button);
+        });
     }
-     
-    set nodes(newNodes) {
-        this.nodes = newNodes;
-    } 
 
-    get edges() {
-        return this._edges;
+    function drawEdges(puzzle) {
+        // Draw edges
+        ctx.strokeStyle = edgeStyle.strokeColor;
+        ctx.lineWidth = edgeStyle.lineWidth;
+        puzzle.edges.forEach(edge => {
+            const [start, end] = edge;
+            ctx.beginPath();
+            ctx.moveTo(puzzle.nodes[start].x, puzzle.nodes[start].y);
+            ctx.lineTo(puzzle.nodes[end].x, puzzle.nodes[end].y);
+            ctx.stroke();
+        });
     }
 
-    set edges(newEdges) {
-        this.edges = newEdges;
+    function drawGraph(puzzle) {
+        // clear canvas and button container in case something was already there 
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        buttonContainer.innerHTML = '';
+
+        // draw buttons and edges for the tunnel system 
+        drawButtons(puzzle);
+        drawEdges(puzzle);
+    }
+    
+    function nodeClicked(node, index) {
+        console.log(`Node ${node.label} clicked!`);
     }
 
-    get dfsPath() {
-        return this._dfsPath;
-    }
-
-    set dfsPath(newPath) {
-        this.dfsPath = newPath;
-    }
-}
-
-// TODO: to be implemented later... start with a hard coded graph for now
-function generatePuzzle() {
-    // randomly generate a puzzle 
-    // store it as graph
-    // return puzzle graph 
-}
-
-
-function drawButtons(puzzle) {
-    // Clear existing buttons
-    buttonContainer.innerHTML = '';
-
-    // Get the button container's dimensions
-    const containerWidth = buttonContainer.offsetWidth;
-    const containerHeight = buttonContainer.offsetHeight;
-
-    // Get the original graph dimensions (used for scaling)
-    const originalWidth = 800; // Original width of the graph
-    const originalHeight = 600; // Original height of the graph
-
-    // Draw nodes and create buttons
-    puzzle.nodes.forEach((node, index) => {
-        // Scale the node position relative to the container size
-        const scaledX = (node.x / originalWidth) * containerWidth;
-        const scaledY = (node.y / originalHeight) * containerHeight;
-
-        // Create a button for each node
-        const button = document.createElement('button');
-        button.style.position = 'absolute';
-        button.style.left = `${scaledX - nodeStyle.radius * 2}px`;
-        button.style.top = `${scaledY - nodeStyle.radius * 2}px`;
-        button.style.width = `${nodeStyle.radius * 4}px`;
-        button.style.height = `${nodeStyle.radius * 4}px`;
-        button.style.borderRadius = '50%';  // Make the button circular
-        button.style.backgroundColor = nodeStyle.fillColor;
-        button.style.backgroundColor = "green";
-        button.style.border = 'none';
-        button.style.cursor = 'pointer';
-        button.textContent = node.label;
-
-        button.onclick = () => {
-            nodeClicked(node, index);
+    function drawRabbit(x, y) {
+        const rabbitImage = new Image();  // Create a new image object
+        rabbitImage.src = 'static/assets/rabbit.png';  // Set the source to the rabbit image path
+    
+        rabbitImage.onload = function() {
+            // Get the canvas dimensions
+            const canvasWidth = rabbitCanvas.width;
+            const canvasHeight = rabbitCanvas.height;
+    
+            // Define a scaling factor based on canvas size
+            const scaleFactor = 0.3;  // control the rabbit size relative to the canvas
+    
+            // Dynamically scale the rabbit's width and height
+            const rabbitWidth = canvasWidth * scaleFactor;  // Rabbit width relative to canvas width
+            const rabbitHeight = canvasHeight * scaleFactor; // Rabbit height relative to canvas height
+    
+            // Clear the previous rabbit
+            rabbitCtx.clearRect(0, 0, rabbitCanvas.width, rabbitCanvas.height);
+    
+            // Calculate the x and y offsets to center the rabbit
+            const offsetX = rabbitWidth / 2;
+            const offsetY = rabbitHeight / 2;
+    
+            // Draw the rabbit, adjusting for the screen size and centering
+            rabbitCtx.drawImage(rabbitImage, x - offsetX, y - offsetY, rabbitWidth, rabbitHeight);
         };
-
-        // Append button to the button-container
-        buttonContainer.appendChild(button);
-    });
-}
-
-function drawEdges(puzzle) {
-    // Draw edges
-    ctx.strokeStyle = edgeStyle.strokeColor;
-    ctx.lineWidth = edgeStyle.lineWidth;
-    puzzle.edges.forEach(edge => {
-        const [start, end] = edge;
-        ctx.beginPath();
-        ctx.moveTo(puzzle.nodes[start].x, puzzle.nodes[start].y);
-        ctx.lineTo(puzzle.nodes[end].x, puzzle.nodes[end].y);
-        ctx.stroke();
-    });
-}
-
-function drawGraph(puzzle) {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    buttonContainer.innerHTML = '';
-    drawButtons(puzzle);
-    drawEdges(puzzle);
-}
-
-function nodeClicked(node, index) {
-    console.log(`Node ${node.label} clicked!`);
-}
-
-drawGraph(puzzle);
-
-function loadRabbit(puzzle) {
-    // draw rabbit at starting position of the puzzle
-}
-
-function validateUserClick(click, index, path) {
-    // if the user's click is the same as path[index] then true 
-    if (click == path[index]) {
-        return true; // proceed as normal
+    }
+    
+    function loadRabbitToStart(puzzle) {
+        const startNode = puzzle.nodes.find(node => node.label.includes("Start"));
+    
+        if (startNode) { // if start node found 
+            drawRabbit(startNode.x, startNode.y);
+            return;
+        } 
+        console.log("Start node not found"); // debugging purposes 
     }
 
-    displayError(); // display error 
-    return false;
-}
-
-function displayError() {
-    // display error message or something if user clicks the wrong node
-    // for use within validateUserClick()
-}
-
-function checkIfCarrotReached(click, index, path) {
-    // check if user has correctly reached the end of the path 
-    if ((click == path[index]) && (index == path.length)) {
-        return true;
+    function moveRabbitOnce(currentX, currentY, newX, newY) {
+        const rabbitWidth = 250;  // Rabbit width for reference
+        const rabbitHeight = 200; // Rabbit height for reference
+    
+        // Step 1: Restore the background at the current rabbit location
+        const backgroundData = ctx.getImageData(currentX - rabbitWidth / 2, currentY - rabbitHeight / 2, rabbitWidth, rabbitHeight);
+        ctx.putImageData(backgroundData, currentX - rabbitWidth / 2, currentY - rabbitHeight / 2);
+    
+        // Step 2: Save the background at the new location before drawing the rabbit
+        const newBackgroundData = ctx.getImageData(newX - rabbitWidth / 2, newY - rabbitHeight / 2, rabbitWidth, rabbitHeight);
+    
+        // Step 3: Draw the rabbit at the new location
+        drawRabbit(newX, newY);
+    }
+    
+    function validateUserClick(click, index, path) {
+        // if the user's click is the same as path[index] then true 
+        if (click == path[index]) {
+            return true; // proceed as normal
+        }
+    
+        displayError(); // display error 
+        return false;
+    }
+    
+    function displayError() {
+        // display error message or something if user clicks the wrong node
+        // for use within validateUserClick()
+    }
+    
+    function checkIfCarrotReached(click, index, path) {
+        // check if user has correctly reached the end of the path 
+        if ((click == path[index]) && (index == path.length)) {
+            return true;
+        }
+    
+        return false;
+    }
+    
+    function carrotReached() {
+        // display success message 
+        calculateAndSaveMetrics();
+        // show option to go the next level 
+    }
+    
+    function calculateAndSaveMetrics() {
+        // calculate any metrics (like accuracy, time on puzzle, etc)
+        // save to browser cookies 
     }
 
-    return false;
-}
+    // TODO: do all of these and implement the methods above 
+    // randomly select or generate puzzle 
+    // draw graph according to puzzle 
+    // load rabbit into starting point 
+    // have var userAllClicks to keep track of the clicks the user has made 
+    // have var userCorrectClicks to keep track of the correct selections to see how far along the path they are right now
+    // validateUserClick will compare the user's click to what should be the next click according to puzzle 
 
-function carrotReached() {
-    // display success message 
-    calculateAndSaveMetrics();
-    // show option to go the next level 
-}
+    // var puzzle = generatePuzzle(); // change it to hard coded puzzle at first if needed 
 
-function calculateAndSaveMetrics() {
-    // calculate any metrics (like accuracy, time on puzzle, etc)
-    // save to browser cookies 
-}
 
-// TODO: do all of these and implement the methods above 
-// randomly select or generate puzzle 
-// draw graph according to puzzle 
-// load rabbit into starting point 
-// have var userAllClicks to keep track of the clicks the user has made 
-// have var userCorrectClicks to keep track of the correct selections to see how far along the path they are right now
-// validateUserClick will compare the user's click to what should be the next click according to puzzle 
+    //drawGraph(puzzle);
 
-// var puzzle = generatePuzzle(); // change it to hard coded puzzle at first if needed 
+    var puzzle = new TunnelSystem(nodes, edges);
 
-const nodes = [
-    {x: 100, y: 100, label: 'Start'},  
-    {x: 300, y: 100, label: 'B'},
-    {x: 500, y: 150, label: 'C'},
-    {x: 700, y: 100, label: 'D'},  
-    {x: 300, y: 300, label: 'E'},
-    {x: 500, y: 300, label: 'F'},  
-    {x: 700, y: 300, label: 'G'},  
-    {x: 400, y: 500, label: 'Carrot'},  
-    {x: 600, y: 500, label: 'I'},  
-    {x: 100, y: 300, label: 'J'}   
-];
-
-// Define edges for the graph, including long paths, dead ends, and a fork
-const edges = [
-    [0, 1], [1, 2], [2, 3],  // Long path A -> B -> C -> D (dead end)
-    [0, 4], [4, 5],          // Path from A -> E -> F (fork point)
-    [5, 6],                  // F -> G (dead end)
-    [5, 7], [5, 8],          // Fork paths F -> H and F -> I
-    [4, 9],                  // E -> J (dead end)
-];
-
-var puzzle = new TunnelSystem(nodes, edges);
-
-drawGraph(puzzle); // draw puzzle as tunnel system 
-loadRabbit(puzzle); // draw rabbit at starting point of the tunnel according to puzzle 
-var userAllClicks = [];
-var userCorrectClicks  =[];
-
-// TODO: NEED TO FIGURE OUT HOW TO SET ONCLICK FUNCTIONS SO THAT THE GAME AUTOMATICALLY PROGRESSES
+    drawGraph(puzzle); // draw puzzle as tunnel system 
+    loadRabbitToStart(puzzle); // draw rabbit at starting point of the tunnel according to puzzle 
+    var userAllClicks = [];
+    var userCorrectClicks  =[];
+});

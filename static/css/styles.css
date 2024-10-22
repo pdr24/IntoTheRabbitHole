@@ -91,7 +91,7 @@ canvas {
 }
 
 #rabbit-canvas {
-    z-index: 1;  /* Rabbit canvas on top of background */
+    z-index: 2;  /* Rabbit canvas on top of background */
     pointer-events: none; /* Allow interactions through this canvas */
 }
 

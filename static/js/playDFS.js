@@ -169,6 +169,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     var puzzle = new TunnelSystem(nodes, edges);
 
+    // draws nodes of tunnel system as buttons
     function drawButtons(puzzle) {
         // Clear existing buttons
         buttonContainer.innerHTML = '';
@@ -209,6 +210,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
+    // draws edges of tunnel system 
     function drawEdges(puzzle) {
         // Draw edges
         ctx.strokeStyle = edgeStyle.strokeColor;
@@ -222,6 +224,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
+    // draws tunnel system using drawButtons() and drawEdges() 
     function drawGraph(puzzle) {
         // clear canvas and button container in case something was already there 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -232,6 +235,8 @@ document.addEventListener("DOMContentLoaded", function() {
         drawEdges(puzzle);
     }
     
+    // on click function for the nodes 
+    // has important game-play logic 
     function nodeClicked(node, puzzleObj) {
         console.log(`Node ${node.label} clicked!`);
         const path = puzzleObj.dfsPath;
@@ -273,6 +278,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
+    // displays error message when wrong node is clicked 
     function showErrorOnCanvas(label) {
         const canvasRect = canvas.getBoundingClientRect();  // Get the actual size and position of the canvas
         const canvasWidth = canvasRect.width;
@@ -354,6 +360,7 @@ document.addEventListener("DOMContentLoaded", function() {
         document.addEventListener('click', clickToRemoveErrorMessage);
     }
     
+    // draw rabbit on canvas 
     function drawRabbit(x, y) {
         const rabbitImage = new Image();  // Create a new image object
         rabbitImage.src = 'static/assets/rabbit.png';  // Set the source to the rabbit image path
@@ -379,6 +386,7 @@ document.addEventListener("DOMContentLoaded", function() {
         };
     }
     
+    // draws rabbit at starting node of puzzle 
     function loadRabbitToStart(puzzle) {
         const startNode = puzzle.nodes.find(node => node.label.includes("Start"));
     
@@ -389,6 +397,7 @@ document.addEventListener("DOMContentLoaded", function() {
         console.log("Start node not found"); // debugging purposes 
     }
     
+    // checks if the node the user clicked was correct 
     function isUserClickValid(nodeClicked, currIndex, path) {
         // if the user's click is the same as path[index] then true 
 
@@ -405,6 +414,7 @@ document.addEventListener("DOMContentLoaded", function() {
         return false;
     }
     
+    // checks if the carrot node has been reached 
     function isCarrotReached(node) {
         // check if user has correctly reached the carrot 
         if (node.label.includes("Carrot")) {
@@ -414,6 +424,7 @@ document.addEventListener("DOMContentLoaded", function() {
         return false;
     }
     
+    // displays good job message and shows play again and next level buttons 
     function carrotReached() {
         // display success message 
         calculateAndSaveMetrics();
@@ -422,6 +433,7 @@ document.addEventListener("DOMContentLoaded", function() {
         showCongratsModal();
     }
 
+    // displays good job modal on screen 
     function showCongratsModal() {
         const modal = document.getElementById('congratulationsModal');
         modal.style.display = 'flex'; // Make the modal visible
@@ -437,11 +449,14 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
     
+    // restarts the level 
     function resetLevel() {
         // Logic to reset the level, this could reload the page for now
         window.location.reload(); 
     }
     
+    // TODO: implement this 
+    // saves data 
     function calculateAndSaveMetrics() {
         // calculate any metrics (like accuracy, time on puzzle, etc)
         // save to browser cookies 
@@ -456,7 +471,6 @@ document.addEventListener("DOMContentLoaded", function() {
     // validateUserClick will compare the user's click to what should be the next click according to puzzle 
 
     // var puzzle = generatePuzzle(); // change it to hard coded puzzle at first if needed 
-
     var puzzle = new TunnelSystem(nodes, edges);
     console.log(puzzle.dfsPath); // for testing purposes 
     

@@ -245,11 +245,12 @@ document.addEventListener("DOMContentLoaded", function() {
             console.log("click was correct");
 
             // move rabbit 
-            var labelPrev = path[currIndex - 1];
+            var labelPrev = path[currIndex - 2]; // needs to be -2 to get the prev node 
             var prevNode = puzzleObj.nodes.find(node => node.label === labelPrev);
             drawRabbit(node.x, node.y);
 
             // draw path 
+            console.log("prevNode x and y: " + prevNode.x + ", " + prevNode.y);
             ctx.beginPath();
             ctx.moveTo(prevNode.x, prevNode.y);  // Move to the previous node's position
             ctx.lineTo(node.x, node.y);  // Draw a line to the current node's position
@@ -430,9 +431,6 @@ document.addEventListener("DOMContentLoaded", function() {
     // validateUserClick will compare the user's click to what should be the next click according to puzzle 
 
     // var puzzle = generatePuzzle(); // change it to hard coded puzzle at first if needed 
-
-
-    //drawGraph(puzzle);
 
     var puzzle = new TunnelSystem(nodes, edges);
     console.log(puzzle.dfsPath); // for testing purposes 

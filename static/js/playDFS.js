@@ -148,7 +148,7 @@ document.addEventListener("DOMContentLoaded", function() {
         {x: 300, y: 300, label: 'E'},
         {x: 500, y: 300, label: 'F'},  
         {x: 700, y: 300, label: 'G'},  
-        {x: 400, y: 500, label: 'Carrot'},  
+        {x: 400, y: 500, label: 'H (Carrot)'},  
         {x: 600, y: 500, label: 'I'},  
         {x: 100, y: 300, label: 'J'}
     ];
@@ -263,19 +263,20 @@ document.addEventListener("DOMContentLoaded", function() {
             ctx.lineWidth = 20; // Set path width
             ctx.stroke(); // Render the line
 
+            // check if carrot reached 
+            if (isCarrotReached(node)) {
+                console.log("carrot has been reached");
+                carrotReached();
+
+                // add logic for when the carrot has been reached 
+            }
+
         }
         else { // user click was incorrect 
             showErrorOnCanvas(node.label);
             // TODO: update required vars to track user correctness and progress as needed 
         }
 
-        // check if carrot reached 
-        if (isCarrotReached(node)) {
-            console.log("carrot has been reached");
-            carrotReached();
-
-            // add logic for when the carrot has been reached 
-        }
     }
 
     // displays error message when wrong node is clicked 

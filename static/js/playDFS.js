@@ -267,6 +267,7 @@ document.addEventListener("DOMContentLoaded", function() {
         // check if carrot reached 
         if (isCarrotReached(node)) {
             console.log("carrot has been reached");
+            carrotReached();
 
             // add logic for when the carrot has been reached 
         }
@@ -421,7 +422,29 @@ document.addEventListener("DOMContentLoaded", function() {
     function carrotReached() {
         // display success message 
         calculateAndSaveMetrics();
+
         // show option to go the next level 
+        showCongratsModal();
+    }
+
+    function showCongratsModal() {
+        const modal = document.getElementById('congratulationsModal');
+        modal.style.display = 'flex'; // Make the modal visible
+    
+        // Play Again button functionality
+        document.getElementById('playAgainButton').addEventListener('click', function() {
+            resetLevel();  // Call function to reset the current level
+        });
+    
+        // Next Level button functionality
+        document.getElementById('nextLevelButton').addEventListener('click', function() {
+            window.location.href = 'index.html'; // Redirect to next level (index.html)
+        });
+    }
+    
+    function resetLevel() {
+        // Logic to reset the level, this could reload the page for now
+        window.location.reload(); 
     }
     
     function calculateAndSaveMetrics() {
@@ -451,5 +474,4 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 // TODO: check the updateDFSPath function on other graphs 
-// TODO: fix path drawing 
 // TODO: make error message show up above rabbit image 

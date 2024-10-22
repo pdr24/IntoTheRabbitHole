@@ -252,16 +252,23 @@ document.addEventListener("DOMContentLoaded", function() {
             // draw path 
             console.log("prevNode x and y: " + prevNode.x + ", " + prevNode.y);
             ctx.beginPath();
-            ctx.moveTo(prevNode.x, prevNode.y);  // Move to the previous node's position
-            ctx.lineTo(node.x, node.y);  // Draw a line to the current node's position
-            ctx.strokeStyle = pathColor;         // Set path color
-            ctx.lineWidth = 20;                   // Set path width
-            ctx.stroke();                        // Render the line
+            ctx.moveTo(prevNode.x, prevNode.y); // Move to the previous node's position
+            ctx.lineTo(node.x, node.y); // Draw a line to the current node's position
+            ctx.strokeStyle = pathColor; // Set path color
+            ctx.lineWidth = 20; // Set path width
+            ctx.stroke(); // Render the line
 
         }
         else { // user click was incorrect 
             showErrorOnCanvas(node.label);
             // TODO: update required vars to track user correctness and progress as needed 
+        }
+
+        // check if carrot reached 
+        if (isCarrotReached) {
+            console.log("carrot has been reached");
+
+            // add logic for when the carrot has been reached 
         }
     }
 
@@ -402,9 +409,9 @@ document.addEventListener("DOMContentLoaded", function() {
         // for use within validateUserClick()
     }
     
-    function checkIfCarrotReached(click, index, path) {
+    function isCarrotReached(node, currIndex, puzzle) {
         // check if user has correctly reached the end of the path 
-        if ((click == path[index]) && (index == path.length)) {
+        if ((node.label == puzzle.path[currIndex]) && (currIndex == (puzzle.path.length - 1))) {
             return true;
         }
     

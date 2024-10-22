@@ -243,6 +243,11 @@ document.addEventListener("DOMContentLoaded", function() {
             userCorrectClicks.push(node.label);
             currIndex = currIndex + 1;
             console.log("click was correct");
+
+            // move rabbit and draw path 
+            var labelPrev = path[currIndex - 1]
+            var currNode = puzzleObj.nodes.findIndex(node => node.label === labelPrev)
+            moveRabbitOnce(currNode.x, currNode.y, node.x, node.y)
         }
         else { // user click was incorrect 
             showErrorOnCanvas(node.label);
@@ -299,24 +304,36 @@ document.addEventListener("DOMContentLoaded", function() {
         buttonContainer.appendChild(errorBackground);
         buttonContainer.appendChild(button);
 
+        // Remove the buttons after 3 seconds
+        let timeoutId = setTimeout(() => {
+            removeErrorMessage();
+        }, 3000);  // 3 seconds
+
+        // Function to remove the error message
+        function removeErrorMessage() {
+            if (buttonContainer.contains(button)) {
+                buttonContainer.removeChild(button);
+            }
+            if (buttonContainer.contains(errorBackground)) {
+                buttonContainer.removeChild(errorBackground);
+            }
+            // Remove the event listener after the error message is gone
+            document.removeEventListener('click', clickToRemoveErrorMessage);
+        }
+
         // Event listener for clicking outside the button
         function clickToRemoveErrorMessage(event) {
             if (errorBackground.contains(event.target)) {
-                // Remove the button if the click is outside
-                buttonContainer.removeChild(errorBackground);
-                buttonContainer.removeChild(button);
-                buttonContainer.removeEventListener('click', clickToRemoveErrorMessage); 
+                // Remove the error message if the user clicks the background
+                removeErrorMessage();
+    
+                // Cancel the timeout to prevent it from running
+                clearTimeout(timeoutId);
             }
         }
 
         // Add the event listener to detect clicks outside the button
         document.addEventListener('click', clickToRemoveErrorMessage);
-
-        // Remove the buttons after 3 seconds
-        setTimeout(() => {
-            buttonContainer.removeChild(button);
-            buttonContainer.removeChild(errorBackground);
-        }, 3000);  // 3 seconds
     }
     
     function drawRabbit(x, y) {
@@ -364,8 +381,8 @@ document.addEventListener("DOMContentLoaded", function() {
         const rabbitHeight = canvasHeight * rabbitScaleFactor; // Rabbit height relative to canvas height
 
         // Step 1: Restore the background at the current rabbit location
-        const backgroundData = ctx.getImageData(currentX - rabbitWidth / 2, currentY - rabbitHeight / 2, rabbitWidth, rabbitHeight);
-        ctx.putImageData(backgroundData, currentX - rabbitWidth / 2, currentY - rabbitHeight / 2);
+        //const backgroundData = ctx.getImageData(currentX - rabbitWidth / 2, currentY - rabbitHeight / 2, rabbitWidth, rabbitHeight);
+        //ctx.putImageData(backgroundData, currentX - rabbitWidth / 2, currentY - rabbitHeight / 2);
     
         // Step 2: Save the background at the new location before drawing the rabbit
         const newBackgroundData = ctx.getImageData(newX - rabbitWidth / 2, newY - rabbitHeight / 2, rabbitWidth, rabbitHeight);

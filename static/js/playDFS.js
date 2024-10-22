@@ -244,10 +244,19 @@ document.addEventListener("DOMContentLoaded", function() {
             currIndex = currIndex + 1;
             console.log("click was correct");
 
-            // move rabbit and draw path 
-            var labelPrev = path[currIndex - 1]
-            var currNode = puzzleObj.nodes.findIndex(node => node.label === labelPrev)
-            moveRabbitOnce(currNode.x, currNode.y, node.x, node.y)
+            // move rabbit 
+            var labelPrev = path[currIndex - 1];
+            var prevNode = puzzleObj.nodes.find(node => node.label === labelPrev);
+            drawRabbit(node.x, node.y);
+
+            // draw path 
+            ctx.beginPath();
+            ctx.moveTo(prevNode.x, prevNode.y);  // Move to the previous node's position
+            ctx.lineTo(node.x, node.y);  // Draw a line to the current node's position
+            ctx.strokeStyle = pathColor;         // Set path color
+            ctx.lineWidth = 5;                   // Set path width
+            ctx.stroke();                        // Render the line
+
         }
         else { // user click was incorrect 
             showErrorOnCanvas(node.label);
@@ -370,26 +379,6 @@ document.addEventListener("DOMContentLoaded", function() {
         } 
         console.log("Start node not found"); // debugging purposes 
     }
-
-    function moveRabbitOnce(currentX, currentY, newX, newY) {
-        // Get the canvas dimensions
-        const canvasWidth = rabbitCanvas.width;
-        const canvasHeight = rabbitCanvas.height;
-
-        // Dynamically scale the rabbit's width and height
-        const rabbitWidth = canvasWidth * rabbitScaleFactor;  // Rabbit width relative to canvas width
-        const rabbitHeight = canvasHeight * rabbitScaleFactor; // Rabbit height relative to canvas height
-
-        // Step 1: Restore the background at the current rabbit location
-        //const backgroundData = ctx.getImageData(currentX - rabbitWidth / 2, currentY - rabbitHeight / 2, rabbitWidth, rabbitHeight);
-        //ctx.putImageData(backgroundData, currentX - rabbitWidth / 2, currentY - rabbitHeight / 2);
-    
-        // Step 2: Save the background at the new location before drawing the rabbit
-        const newBackgroundData = ctx.getImageData(newX - rabbitWidth / 2, newY - rabbitHeight / 2, rabbitWidth, rabbitHeight);
-    
-        // Step 3: Draw the rabbit at the new location
-        drawRabbit(newX, newY);
-    }
     
     function isUserClickValid(nodeClicked, currIndex, path) {
         // if the user's click is the same as path[index] then true 
@@ -457,3 +446,5 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 // TODO: check the updateDFSPath function on other graphs 
+// TODO: fix path drawing 
+// TODO: make error message show up above rabbit image 

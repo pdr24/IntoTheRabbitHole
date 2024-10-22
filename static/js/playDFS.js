@@ -394,10 +394,11 @@ document.addEventListener("DOMContentLoaded", function() {
     function isUserClickValid(nodeClicked, currIndex, path) {
         // if the user's click is the same as path[index] then true 
 
-        console.log("nodeClicked.label = " + nodeClicked.label);
-        console.log("path = " + path);
-        console.log("currIndex = " + currIndex);
-        console.log("path[currIndex] = " + path[currIndex]);
+        // for testing purposes
+        // console.log("nodeClicked.label = " + nodeClicked.label);
+        // console.log("path = " + path);
+        // console.log("currIndex = " + currIndex);
+        // console.log("path[currIndex] = " + path[currIndex]);
 
         if (nodeClicked.label == path[currIndex]) {
             return true; // proceed as normal

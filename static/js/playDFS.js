@@ -1,4 +1,5 @@
 var curr_level = 0; // keeps track of current level for use with game logic 
+var rabbitScaleFactor = 0.3; // scale factor to size rabbit image according to screen size
 
 // to read and update the current level 
 document.addEventListener("DOMContentLoaded", function() {
@@ -217,12 +218,9 @@ document.addEventListener("DOMContentLoaded", function() {
             const canvasWidth = rabbitCanvas.width;
             const canvasHeight = rabbitCanvas.height;
     
-            // Define a scaling factor based on canvas size
-            const scaleFactor = 0.3;  // control the rabbit size relative to the canvas
-    
             // Dynamically scale the rabbit's width and height
-            const rabbitWidth = canvasWidth * scaleFactor;  // Rabbit width relative to canvas width
-            const rabbitHeight = canvasHeight * scaleFactor; // Rabbit height relative to canvas height
+            const rabbitWidth = canvasWidth * rabbitScaleFactor;  // Rabbit width relative to canvas width
+            const rabbitHeight = canvasHeight * rabbitScaleFactor; // Rabbit height relative to canvas height
     
             // Clear the previous rabbit
             rabbitCtx.clearRect(0, 0, rabbitCanvas.width, rabbitCanvas.height);
@@ -247,9 +245,14 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function moveRabbitOnce(currentX, currentY, newX, newY) {
-        const rabbitWidth = 250;  // Rabbit width for reference
-        const rabbitHeight = 200; // Rabbit height for reference
-    
+        // Get the canvas dimensions
+        const canvasWidth = rabbitCanvas.width;
+        const canvasHeight = rabbitCanvas.height;
+
+        // Dynamically scale the rabbit's width and height
+        const rabbitWidth = canvasWidth * rabbitScaleFactor;  // Rabbit width relative to canvas width
+        const rabbitHeight = canvasHeight * rabbitScaleFactor; // Rabbit height relative to canvas height
+
         // Step 1: Restore the background at the current rabbit location
         const backgroundData = ctx.getImageData(currentX - rabbitWidth / 2, currentY - rabbitHeight / 2, rabbitWidth, rabbitHeight);
         ctx.putImageData(backgroundData, currentX - rabbitWidth / 2, currentY - rabbitHeight / 2);

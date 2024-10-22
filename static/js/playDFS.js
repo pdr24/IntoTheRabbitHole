@@ -405,11 +405,6 @@ document.addEventListener("DOMContentLoaded", function() {
         return false;
     }
     
-    function displayError() {
-        // display error message or something if user clicks the wrong node
-        // for use within validateUserClick()
-    }
-    
     function isCarrotReached(node) {
         // check if user has correctly reached the carrot 
         if (node.label.includes("Carrot")) {
@@ -475,3 +470,4 @@ document.addEventListener("DOMContentLoaded", function() {
 
 // TODO: check the updateDFSPath function on other graphs 
 // TODO: make error message show up above rabbit image 
+// TODO: add data saving 

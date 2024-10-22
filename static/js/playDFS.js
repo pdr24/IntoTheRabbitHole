@@ -265,7 +265,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         // check if carrot reached 
-        if (isCarrotReached) {
+        if (isCarrotReached(node)) {
             console.log("carrot has been reached");
 
             // add logic for when the carrot has been reached 
@@ -409,9 +409,9 @@ document.addEventListener("DOMContentLoaded", function() {
         // for use within validateUserClick()
     }
     
-    function isCarrotReached(node, currIndex, puzzle) {
-        // check if user has correctly reached the end of the path 
-        if ((node.label == puzzle.path[currIndex]) && (currIndex == (puzzle.path.length - 1))) {
+    function isCarrotReached(node) {
+        // check if user has correctly reached the carrot 
+        if (node.label.includes("Carrot")) {
             return true;
         }
     

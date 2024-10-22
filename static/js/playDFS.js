@@ -201,7 +201,7 @@ document.addEventListener("DOMContentLoaded", function() {
             button.textContent = node.label;
 
             button.onclick = () => {
-                nodeClicked(node, index);
+                nodeClicked(node, puzzle);
             };
 
             // Append button to the button-container
@@ -232,12 +232,17 @@ document.addEventListener("DOMContentLoaded", function() {
         drawEdges(puzzle);
     }
     
-    function nodeClicked(node, index) {
+    function nodeClicked(node, puzzleObj) {
         console.log(`Node ${node.label} clicked!`);
-        isUserClickValid = false; // for now to test the else branch 
+        const path = puzzleObj.dfsPath;
 
-        if (isUserClickValid) { // user's click was correct 
+        // update userAllClicks
+        userAllClicks.push(node.label)
 
+        if (isUserClickValid(node, currIndex, path)) { // user's click was correct 
+            userCorrectClicks.push(node.label);
+            currIndex = currIndex + 1;
+            console.log("click was correct");
         }
         else { // user click was incorrect 
             showErrorOnCanvas(node.label);
@@ -369,13 +374,18 @@ document.addEventListener("DOMContentLoaded", function() {
         drawRabbit(newX, newY);
     }
     
-    function isUserClickValid(click, index, path) {
+    function isUserClickValid(nodeClicked, currIndex, path) {
         // if the user's click is the same as path[index] then true 
-        if (click == path[index]) {
+
+        console.log("nodeClicked.label = " + nodeClicked.label);
+        console.log("path = " + path);
+        console.log("currIndex = " + currIndex);
+        console.log("path[currIndex] = " + path[currIndex]);
+
+        if (nodeClicked.label == path[currIndex]) {
             return true; // proceed as normal
         }
     
-        displayError(); // display error 
         return false;
     }
     
@@ -418,12 +428,15 @@ document.addEventListener("DOMContentLoaded", function() {
     //drawGraph(puzzle);
 
     var puzzle = new TunnelSystem(nodes, edges);
-
+    puzzle.updateDFSPath();
+    
     drawGraph(puzzle); // draw puzzle as tunnel system 
     loadRabbitToStart(puzzle); // draw rabbit at starting point of the tunnel according to puzzle 
     var userAllClicks = [];
     var userCorrectClicks = [];
-    console.log(puzzle.dfsPath);
+    var currIndex = 1; 
+
+    console.log(puzzle.dfsPath); // for testing purposes 
 });
 
 // TODO: check the updateDFSPath function on other graphs 

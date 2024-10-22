@@ -255,7 +255,7 @@ document.addEventListener("DOMContentLoaded", function() {
             ctx.moveTo(prevNode.x, prevNode.y);  // Move to the previous node's position
             ctx.lineTo(node.x, node.y);  // Draw a line to the current node's position
             ctx.strokeStyle = pathColor;         // Set path color
-            ctx.lineWidth = 5;                   // Set path width
+            ctx.lineWidth = 20;                   // Set path width
             ctx.stroke();                        // Render the line
 
         }

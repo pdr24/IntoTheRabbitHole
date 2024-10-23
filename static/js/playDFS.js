@@ -490,3 +490,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
 // TODO: DO STYLING STUFF FIRST AND WRAP UP DFS 
 // that way, it'll be really easy to shift to bfs ... all I'd have to do is use an updateBFS path instead of updateBFS path 
+
+/** 
+style considerations: 
+    - slight shadows under buttons 
+    - change button coloration hue when cursor is on it 
+    - clear, nice fonts 
+    - some color 
+    - adequate whitespace 
+    - natural grouping and organization of related things 
+    - coloration should be consistent (like buttons in one color, headers in one color, etc kinda)
+
+*/

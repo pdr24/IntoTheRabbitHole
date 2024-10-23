@@ -1,3 +1,30 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;  /* Ensure the width doesn't exceed the viewport */
+    height: 100vh; /* Ensure the body and html fill the viewport */
+    overflow: hidden; /* Prevent scrolling */
+    box-sizing: border-box;
+}
+
+/* Title style using DynaPuff font */
+.dynapuff-title1 {
+    font-family: "DynaPuff", system-ui;
+    font-optical-sizing: auto;
+    font-weight: 700;  /* You can change to 400, 500, 600, etc., based on the weight you prefer */
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+    font-size: 60px;
+}
+.dynapuff-title2 {
+    font-family: "DynaPuff", system-ui;
+    font-optical-sizing: auto;
+    font-weight: 700;  /* You can change to 400, 500, 600, etc., based on the weight you prefer */
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+    font-size: 50px;
+}
+
 body {
     font-family: Arial, sans-serif;
     background-color: #f0f0f0;

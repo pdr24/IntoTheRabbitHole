@@ -487,3 +487,6 @@ document.addEventListener("DOMContentLoaded", function() {
 // TODO: make error message show up above rabbit image 
 // TODO: add data saving 
 // TODO: add better styling overall lol 
+
+// TODO: DO STYLING STUFF FIRST AND WRAP UP DFS 
+// that way, it'll be really easy to shift to bfs ... all I'd have to do is use an updateBFS path instead of updateBFS path 

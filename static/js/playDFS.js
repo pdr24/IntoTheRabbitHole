@@ -500,5 +500,11 @@ style considerations:
     - adequate whitespace 
     - natural grouping and organization of related things 
     - coloration should be consistent (like buttons in one color, headers in one color, etc kinda)
-
 */
+
+/** 
+ * organization considerations: 
+ *  - use jsx modules like in HealthSift for better organization 
+ *  - allows importing functions and stuff from one file to another 
+ *  - could do like tunnelsystem.jsx, visualization.jsx, playGame.jsx maybe 
+ */

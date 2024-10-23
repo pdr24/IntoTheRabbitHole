@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const pathColor = "orange";
 
     const nodeStyle = {
-        radius: 20,
+        radius: 27,
         fillColor: '#614939',
         strokeColor: '#614939',
         labelColor: '#000',
@@ -199,7 +199,15 @@ document.addEventListener("DOMContentLoaded", function() {
             button.style.backgroundColor = nodeStyle.fillColor;
             button.style.border = 'none';
             button.style.cursor = 'pointer';
-            button.textContent = node.label;
+            if (node.label != "Start") {
+                button.textContent = node.label[0];
+            }
+            else {
+                button.textContent = node.label;
+            }
+
+            button.style.fontSize = "30px";
+            button.style.fontFamily = "DynaPuff";
 
             button.onclick = () => {
                 nodeClicked(node, puzzle);

@@ -307,7 +307,12 @@ document.addEventListener("DOMContentLoaded", function() {
     
         // Create the button
         const button = document.createElement('button');
-        button.innerHTML = label + " was the wrong node.<br><br>Click to try again";
+        if (label != 'Start') {
+            button.innerHTML = label[0] + " was the wrong node.<br><br>Click to try again";
+        }
+        else {
+            button.innerHTML = label + " was the wrong node.<br><br>Click to try again";
+        }
         button.style.fontFamily = "DynaPuff, system-ui";
         button.style.fontSize = "40px";
         button.style.position = 'absolute';

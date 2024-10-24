@@ -248,7 +248,7 @@ canvas {
 .modal-content {
     background-color: rgb(227,227,227);
     padding: 20px;
-    border-radius: 5%;
+    border-radius: 50px;
     text-align: center;
     width: 40vw;
     height: 42vh;
@@ -275,7 +275,7 @@ canvas {
 
     color: white;
     border: none;
-    border-radius: 10%;
+    border-radius: 20px;
     cursor: pointer;
 }
 

@@ -197,7 +197,15 @@ document.addEventListener("DOMContentLoaded", function() {
             button.style.height = `${nodeStyle.radius * 4}px`;
             button.style.borderRadius = '50%';  // Make the button circular
             // button.style.backgroundColor = nodeStyle.fillColor;
-            button.style.backgroundImage = 'linear-gradient(to bottom, rgba(97, 73, 57, 1), rgba(97, 73, 57, 0.85))';  // Gradient with rgba
+            button.style.backgroundImage = 'linear-gradient(to bottom, rgba(97, 73, 57, 1), rgba(97, 73, 57, 0.95))';  // Gradient with rgba
+
+            button.addEventListener('mouseover', function() {
+                button.style.backgroundImage = 'linear-gradient(to bottom, rgba(97, 73, 57, 0.95), rgba(97, 73, 57, 1.0))';  // Hover color
+            });
+            
+            button.addEventListener('mouseout', function() {
+                button.style.backgroundImage = 'linear-gradient(to bottom, rgba(97, 73, 57, 1), rgba(97, 73, 57, 0.95))';  // Revert to original
+            });
 
             button.style.border = 'none';
             button.style.cursor = 'pointer';

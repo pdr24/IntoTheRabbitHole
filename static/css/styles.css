@@ -248,23 +248,31 @@ canvas {
 .modal-content {
     background-color: white;
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 5%;
     text-align: center;
-    width: 300px;
+    width: 40vw;
+    height: 42vh;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .modal-content h2 {
-    margin-bottom: 20px;
-    font-size: 24px;
+    margin-bottom: 7%;
+    margin-top: 8%;
+    font-family: "DynaPuff", system-ui;
+    font-size: 100px;
 }
 
 /* Buttons */
 .modal-content button {
-    margin: 10px;
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #4CAF50; /* Green */
+    margin: 5%;
+    padding: 20px;
+    font-family: "Arial";
+    font-size: 40px;
+    width: 15vw;
+    height: 10vh;
+    /*background-color: rgb(73, 138, 12); */
+    background-image: linear-gradient(to bottom, rgba(73, 138, 12, 0.85), rgba(73, 138, 12, 1.0));
+
     color: white;
     border: none;
     border-radius: 5px;

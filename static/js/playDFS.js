@@ -1,5 +1,5 @@
 var curr_level = 0; // keeps track of current level for use with game logic 
-var rabbitScaleFactor = 0.3; // scale factor to size rabbit image according to screen size
+var rabbitScaleFactor = 0.4; // scale factor to size rabbit image according to screen size
 
 // to read and update the current level 
 document.addEventListener("DOMContentLoaded", function() {
@@ -382,7 +382,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // draw rabbit on canvas 
     function drawRabbit(x, y) {
         const rabbitImage = new Image();  // Create a new image object
-        rabbitImage.src = 'static/assets/rabbit.png';  // Set the source to the rabbit image path
+        rabbitImage.src = 'static/assets/2rabbit.png';  // Set the source to the rabbit image path
     
         rabbitImage.onload = function() {
             // Get the canvas dimensions

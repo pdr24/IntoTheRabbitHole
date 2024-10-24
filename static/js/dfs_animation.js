@@ -131,7 +131,7 @@ function moveRabbit() {
 
 function drawRabbit(x, y) {
     const rabbitImage = new Image();  // Create a new image object
-    rabbitImage.src = 'static/assets/rabbit.png';  // Set the source to the rabbit image path
+    rabbitImage.src = 'static/assets/2rabbit.png';  // Set the source to the rabbit image path
 
     rabbitImage.onload = function() {
         const rabbitWidth = 250;  // Set the desired width of the rabbit

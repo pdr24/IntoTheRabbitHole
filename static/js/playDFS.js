@@ -307,7 +307,7 @@ document.addEventListener("DOMContentLoaded", function() {
     
         // Create the button
         const button = document.createElement('button');
-        button.innerHTML = label + " was the wrong node.<br><br>Try again";
+        button.innerHTML = label + " was the wrong node.<br><br>Click to try again";
         button.style.fontFamily = "DynaPuff, system-ui";
         button.style.fontSize = "40px";
         button.style.position = 'absolute';
@@ -373,7 +373,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Event listener for clicking outside the button
         function clickToRemoveErrorMessage(event) {
-            if (errorBackground.contains(event.target)) {
+            if (errorContainer.contains(event.target)) {
                 // Remove the error message if the user clicks the background
                 removeErrorMessage();
     

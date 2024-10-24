@@ -24,6 +24,8 @@ document.addEventListener("DOMContentLoaded", function() {
     const rabbitCanvas = document.getElementById('rabbit-canvas'); // get rabbit canvas for drawing the rabbit
     const rabbitCtx = rabbitCanvas.getContext('2d');
 
+    const errorContainer = document.querySelector('.error-message-div'); // Get button container
+
     canvas.width = 800;
     canvas.height = 600;
 
@@ -305,21 +307,22 @@ document.addEventListener("DOMContentLoaded", function() {
     
         // Create the button
         const button = document.createElement('button');
-        button.innerHTML = label + " was the wrong node. Try again";
+        button.innerHTML = label + " was the wrong node.<br><br>Try again";
+        button.style.fontFamily = "DynaPuff, system-ui";
+        button.style.fontSize = "40px";
         button.style.position = 'absolute';
 
-        const buttonWidth = 400;
-        const buttonHeight = 300;
+        const buttonWidth = 600;
+        const buttonHeight = 400;
         button.style.left = `${(canvasWidth / 2) - (buttonWidth / 2)}px`;  
         button.style.top = `${(canvasHeight / 2) - (buttonHeight / 2)}px`;  
         button.style.width = `${buttonWidth}px`;
         button.style.height = `${buttonHeight}px`;
 
         button.style.backgroundColor = "white";
+        button.style.backgroundColor = "rgb(255,182,104, 0.9)";
         button.style.borderRadius = '20px';
         button.style.outlineColor = "black";
-
-        button.style.fontSize = '24px';
 
         button.style.cursor = 'pointer';
     
@@ -344,8 +347,10 @@ document.addEventListener("DOMContentLoaded", function() {
         errorBackground.style.cursor = 'pointer';
     
         // Append the button to the button container, positioned relative to the canvas
-        buttonContainer.appendChild(errorBackground);
-        buttonContainer.appendChild(button);
+        errorContainer.appendChild(errorBackground);
+        errorContainer.appendChild(button);
+        errorContainer.style.display = "block";
+        
 
         // Remove the buttons after 3 seconds
         let timeoutId = setTimeout(() => {
@@ -354,11 +359,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Function to remove the error message
         function removeErrorMessage() {
-            if (buttonContainer.contains(button)) {
-                buttonContainer.removeChild(button);
+            if (errorContainer.contains(button)) {
+                errorContainer.removeChild(button);
+                errorContainer.style.display = "none";
             }
-            if (buttonContainer.contains(errorBackground)) {
-                buttonContainer.removeChild(errorBackground);
+            if (errorContainer.contains(errorBackground)) {
+                errorContainer.removeChild(errorBackground);
+                errorContainer.style.display = "none";
             }
             // Remove the event listener after the error message is gone
             document.removeEventListener('click', clickToRemoveErrorMessage);

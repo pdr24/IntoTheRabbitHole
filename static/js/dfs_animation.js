@@ -78,8 +78,9 @@ function drawGraph() {
         
         // Draw node label
         ctx.fillStyle = nodeStyle.labelColor;
-        ctx.font = '16px Arial';
+        ctx.font = '20px Dynapuff';
         ctx.fillText(node.label, node.x - 5, node.y + 5);
+        
     });
 }
 

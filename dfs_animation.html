@@ -5,20 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Into the Rabbit Hole - Page 1</title>
     <link rel="stylesheet" href="static/css/styles.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&display=swap" rel="stylesheet">
+
 </head>
 <body>
-    <div class="container">
-        <div class="left">
-            <h1>Depth-First Search (DFS)</h1>
-            <p>
-                Depth-First Search (DFS) is an algorithm for searching through a graph/maze and find a path to the goal.
-                The algorithm starts at the starting node and explores as far as possible along each branch before backtracking. When it backtracks, it comes back to the last fork in the road it passed and tries the other path from there. 
-            </p>
+    <img id="BackgroundImage" style="width: 100%; height: 100%; left: 0%; top: 0%; opacity: 50%; position: absolute" src="/static/assets/ITRH_Design_Background.png" alt="Background Image" /> 
 
-            <a href="dfs_level1.html" class="next-button">Next</a>
+    <div class="container-dfs">
+        <div class="left">
+            <div class="instructions-container">
+            
+                <h1 class="dynapuff-title1">Depth-First Search (DFS)</h1>
+                <p class="algorithm-explanation">
+                    Depth-First Search (DFS) is an algorithm for searching through a graph/maze and finding a path to the goal.
+                    The algorithm starts at the starting node and explores as far as possible along each branch before backtracking. When it backtracks, it comes back to the last fork in the road it passed and tries the other path from there. 
+                </p>
+
+                <a href="dfs_level1.html" class="next-button">Next</a>
         </div>
-        <div class="right">
-            <h2>DFS Animation</h2>
+        </div>
+        <div class="right">    
             <div class="canvas-container">
                 <canvas id="dfs-animation" width="800" height="600"></canvas>
                 <canvas id="rabbit-canvas" width="800" height="600"></canvas>

@@ -328,7 +328,7 @@ document.addEventListener("DOMContentLoaded", function() {
         errorBackground.style.height = `${errorBackgroundHeight}px`;
 
         errorBackground.style.backgroundColor = "rgba(255, 255, 255, 0.3)";
-        errorBackground.style.borderRadius = '20px';
+        errorBackground.style.borderRadius = '5%';
         errorBackground.style.outlineColor = "black";
 
         errorBackground.style.cursor = 'pointer';

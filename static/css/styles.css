@@ -68,7 +68,8 @@ body {
     position: relative;
     width: 90%;
     height: 80vh;
-    background-color: #483528;
+    background-color: rgba(72, 53, 40, 1);
+
     align-items: center;
     top: 0;                 /* Remove the top offset */
     border-radius: 5%;
@@ -81,10 +82,6 @@ body {
     position: relative;
     width: 100%;
     height: 80vh;
-    background-color: rgba(255, 219, 187, 0.8); /* Semi-transparent black */
-    background-color: #483528;
-    background-color: rgba(255, 219, 187, 1); /* Semi-transparent black */
-    background-color: #ffb668;
     background-color: rgb(255,182,104, 0.8);
 
     align-items: center;

@@ -16,7 +16,9 @@ html, body {
     font-variation-settings: "wdth" 100;
     font-size: 80px;
     border-radius: 5%;
-    margin-bottom: 5%;
+    margin-bottom: 2%;
+    color: #785c4a;
+    color: black;
 }
 .dynapuff-title2 {
     font-family: "DynaPuff", system-ui;
@@ -32,9 +34,10 @@ html, body {
     font-optical-sizing: auto;
     font-size: 40px;
     margin: 5%;
-    margin-top: 15%;
+    margin-top: 12%;
     margin-left: 20%;
     margin-right: 20%;
+    line-height: 1.5;
 }
 
 body {
@@ -79,6 +82,11 @@ body {
     width: 100%;
     height: 80vh;
     background-color: rgba(255, 219, 187, 0.8); /* Semi-transparent black */
+    background-color: #483528;
+    background-color: rgba(255, 219, 187, 1); /* Semi-transparent black */
+    background-color: #ffb668;
+    background-color: rgb(255,182,104, 0.8);
+
     align-items: center;
     top: 0;               /* Remove the top offset */
     border-radius: 5%;

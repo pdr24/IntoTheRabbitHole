@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const pathColor = "orange";
 
     const nodeStyle = {
-        radius: 27,
+        radius: 35,
         fillColor: '#614939',
         strokeColor: '#614939',
         labelColor: '#000',

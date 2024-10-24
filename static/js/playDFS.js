@@ -512,6 +512,8 @@ document.addEventListener("DOMContentLoaded", function() {
 // TODO: make error message show up above rabbit image 
 // TODO: add data saving 
 
+// TODO: ADD MESSAGE OR CARROT IMAGE TO SHOW ONCE THE CARROT HAS BEEN REACHED!!!!!!!
+
 
 /** 
  * organization considerations: 

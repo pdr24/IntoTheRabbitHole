@@ -49,55 +49,29 @@ document.addEventListener("DOMContentLoaded", function() {
         constructor(nodes_val = [], edges_val = []) {
             this._nodes = nodes_val; // array of nodes
             this._edges = edges_val; // array of edges
-            this.updateDFSPath(); // update dfs path based on nodes and edges 
+            this.updateBFSPath(); // update bfs path based on nodes and edges 
         }
 
-        updateDFSPath() {
-            const visited = new Array(nodes.length).fill(false); // To keep track of visited nodes
-            const dfsPath = []; // To store the final DFS path
-            const nodeCount = nodes.length;
+        updateBFSPath() {
+            // TODO: implement this
 
-            const adjacencyList = Array.from({ length: nodeCount }, () => []);
-
-            // Add edges to the adjacency list
-            for (const [start, end] of edges) {
-                adjacencyList[start].push(end);
-                adjacencyList[end].push(start); // Since it's an undirected graph
-            }
-
-            // Helper function to perform DFS
-            function dfs(currentNode) {
-                // Mark the current node as visited and add it to the path
-                visited[currentNode] = true;
-                dfsPath.push(currentNode);
-
-                // Explore neighbors of the current node
-                const neighbors = adjacencyList[currentNode];
-                for (const neighbor of neighbors) {
-                    if (!visited[neighbor]) {
-                        dfs(neighbor);
-                        // Backtrack to the current node after visiting a neighbor
-                        dfsPath.push(currentNode);
-                    }
-                }
-            }
-
-            // Perform DFS starting from node 0 (assuming 0 is the starting node)
-            dfs(0);
-
-            const pathLabels = dfsPath.map(index => nodes[index].label);
-            this._dfsPath = pathLabels;
+            // hard coded for now: 
+            var bfs = ['Start', 'B', 'Start', 'E', 'Start', 'B', 'C', 'B', 'Start', 'E', 'F', 'E', 'J', 'E', 'Start', 'B', 'C', 'D', 'C', 'B', 'Start', 'E', 'F', 'G', 'F', 'H (Carrot)', 'F', 'I', 'E', 'J'];
+            this._bfsPath = bfs;
         }
+        
+        
+        
 
         addNode(x, y, label) {
             this.nodes.push({ x, y, label });
-            this.updateDFSPath();
+            this.updateBFSPath();
         }
 
         addEdge(node1Index, node2Index) {
             if (node1Index < this.nodes.length && node2Index < this.nodes.length) {
                 this.edges.push([node1Index, node2Index]);
-                this.updateDFSPath();
+                this.updateBFSPath();
             } 
             else {
                 console.log('Error: One or both of the node indices do not exist.');
@@ -133,12 +107,12 @@ document.addEventListener("DOMContentLoaded", function() {
             this.edges = newEdges;
         }
 
-        get dfsPath() {
-            return this._dfsPath;
+        get bfsPath() {
+            return this._bfsPath;
         }
 
-        set dfsPath(newPath) {
-            this.dfsPath = newPath;
+        set bfsPath(newPath) {
+            this.bfsPath = newPath;
         }
     }
 
@@ -259,7 +233,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // has important game-play logic 
     function nodeClicked(node, puzzleObj) {
         console.log(`Node ${node.label} clicked!`);
-        const path = puzzleObj.dfsPath;
+        const path = puzzleObj.bfsPath;
 
         // update userAllClicks
         userAllClicks.push(node.label)
@@ -476,7 +450,7 @@ document.addEventListener("DOMContentLoaded", function() {
     
         // Next Level button functionality
         document.getElementById('nextLevelButton').addEventListener('click', function() {
-            window.location.href = 'bfs_level1.html'; // Redirect to next level 
+            window.location.href = 'index.html'; // Redirect to next level (just going to index.html for now)
         });
     }
     
@@ -503,17 +477,17 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // var puzzle = generatePuzzle(); // change it to hard coded puzzle at first if needed 
     var puzzle = new TunnelSystem(nodes, edges);
-    console.log(puzzle.dfsPath); // for testing purposes 
+    console.log(puzzle.bfsPath); // for testing purposes 
     
     drawGraph(puzzle); // draw puzzle as tunnel system 
     loadRabbitToStart(puzzle); // draw rabbit at starting point of the tunnel according to puzzle 
     var userAllClicks = [];
     var userCorrectClicks = [];
-    var currIndex = 1; // start at 1 b/c dfsPath has 'Start' at index = 0 
+    var currIndex = 1; // start at 1 b/c bfsPath has 'Start' at index = 0 
 
 });
 
-// TODO: check the updateDFSPath function on other graphs 
+// TODO: check the updateBFSPath function on other graphs 
 // TODO: make error message show up above rabbit image 
 // TODO: add data saving 
 

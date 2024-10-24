@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Into the Rabbit Hole - Page 1</title>
+    <link rel="stylesheet" href="static/css/styles.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&display=swap" rel="stylesheet">
+
+</head>
+<body data-page-id="level1">
+    <img id="BackgroundImage" style="width: 100%; height: 100%; left: 0%; top: 0%; opacity: 50%; position: absolute" src="/static/assets/ITRH_Design_Background.png" alt="Background Image" /> 
+    <!-- <div class="transparent-background"> </div> -->
+
+    <div class="container-dfs">
+        <div class="left">
+            <div class = "instructions-container">
+            
+                <h1 class="dynapuff-title1">Breadth First Search</h1>
+                <h1 class="dynapuff-title2">- Level 1 -</h1>
+
+                <p class="instructions-text">
+                        Help the rabbit find his way to the carrot using Breadth First Search. Click each node the rabbit needs to visit according to Breadth First Search in order to find the carrot.            
+                </p>
+            </div>
+        </div>
+        <div class="right">
+            <div class="canvas-container">
+                <canvas id="tunnelsystem" width="800" height="600"></canvas>
+                <canvas id="rabbit-canvas" width="800" height="600" z-index="2"></canvas>
+                <div class="button-container"></div>
+                <canvas id="error-canvas" width="800" height="600" z-index="5"></canvas>
+                <div id="errorMessageDiv" class="error-message-div" style="display: none;"></div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Hidden "Good Job" modal overlay -->
+    <div id="congratulationsModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h2>Good Job!</h2>
+            <button id="playAgainButton">Play Again</button>
+            <button id="nextLevelButton">Next Level</button>
+        </div>
+    </div>
+
+    <script src="static/js/playBFS.js"></script>
+</body>
+</html>

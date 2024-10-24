@@ -216,7 +216,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 button.textContent = node.label;
             }
 
-            button.style.fontSize = "30px";
+            button.style.fontSize = "40px";
             button.style.fontFamily = "DynaPuff";
 
             button.onclick = () => {

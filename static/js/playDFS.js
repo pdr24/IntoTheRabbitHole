@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const pathColor = "orange";
 
     const nodeStyle = {
-        radius: 35,
+        radius: 27,
         fillColor: '#614939',
         strokeColor: '#614939',
         labelColor: '#000',
@@ -218,7 +218,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 button.textContent = node.label;
             }
 
-            button.style.fontSize = "40px";
+            button.style.fontSize = "30px";
             button.style.fontFamily = "DynaPuff";
 
             button.onclick = () => {

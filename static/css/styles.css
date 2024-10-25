@@ -14,7 +14,7 @@ html, body {
     font-weight: 700;  /* You can change to 400, 500, 600, etc., based on the weight you prefer */
     font-style: normal;
     font-variation-settings: "wdth" 100;
-    font-size: 70px;
+    font-size: 50px;
     border-radius: 5%;
     margin-bottom: 2%;
     color: #785c4a;
@@ -26,17 +26,17 @@ html, body {
     font-weight: 700;  /* You can change to 400, 500, 600, etc., based on the weight you prefer */
     font-style: normal;
     font-variation-settings: "wdth" 100;
-    font-size: 60px;
+    font-size: 45px;
 }
 
 .instructions-text {
     font-family: "Arial";
     font-optical-sizing: auto;
-    font-size: 40px;
+    font-size: 35px;
     margin: 5%;
-    margin-top: 12%;
-    margin-left: 20%;
-    margin-right: 20%;
+    margin-top: 5%;
+    margin-left: 15%;
+    margin-right: 15%;
     line-height: 1.5;
 }
 

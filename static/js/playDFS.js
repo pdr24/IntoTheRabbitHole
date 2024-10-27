@@ -476,7 +476,7 @@ document.addEventListener("DOMContentLoaded", function() {
     
         // Next Level button functionality
         document.getElementById('nextLevelButton').addEventListener('click', function() {
-            window.location.href = 'bfs_level1.html'; // Redirect to next level 
+            window.location.href = 'bfs_animation.html'; // Redirect to next level 
         });
     }
     

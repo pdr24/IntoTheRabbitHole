@@ -1,3 +1,18 @@
+// to read and update page
+var algorithm = ''; 
+
+document.addEventListener("DOMContentLoaded", function() {
+    const pageBody = document.body;
+    const pageId = pageBody.getAttribute('data-page-id');  // Get the page-specific value
+
+    if (pageId === 'dfs_animation') {
+        algorithm = 'dfs'
+    } 
+    else if (pageId === 'bfs_animation') {
+        algorithm = 'bfs'
+    }
+});
+
 const canvas = document.getElementById('dfs-animation');
 const ctx = canvas.getContext('2d');
 
@@ -33,8 +48,18 @@ const edges = [
     [4, 9],                  // E -> J (dead end)
 ];
 
-// Adjusted DFS path that explores all nodes, including dead ends
+// dfs and bfs paths 
 const dfsPath = [0, 1, 2, 3, 2, 1, 0, 4, 5, 6, 5, 7, 5, 8, 5, 4, 9];
+const bfsPath = bfsIndices = [0, 1, 0, 4, 0, 1, 2, 1, 0, 4, 5, 4, 9, 4, 0, 1, 2, 3, 2, 1, 0, 4, 5, 6, 5, 7, 5, 8, 4, 9];
+
+var pathToUse = null;
+if (algorithm == 'dfs') {
+    pathToUse = dfsPath;
+}
+else {
+    pathToUse = bfsPath;
+}
+
 let rabbitIndex = 0;
 
 // Custom style for nodes
@@ -95,7 +120,7 @@ function highlightEdge(start, end, pathColor) {
 }
 
 function moveRabbit() {
-    const currentNode = nodes[dfsPath[rabbitIndex]];
+    const currentNode = nodes[pathToUse[rabbitIndex]];
     
     // Draw rabbit at the current node (highlighted node)
     ctx.beginPath();
@@ -105,7 +130,7 @@ function moveRabbit() {
 
     // Highlight the edge connecting to the next node
     if (rabbitIndex > 0) {
-        highlightEdge(dfsPath[rabbitIndex - 1], dfsPath[rabbitIndex], nodeStyle.highlightFillColor);
+        highlightEdge(pathToUse[rabbitIndex - 1], pathToUse[rabbitIndex], nodeStyle.highlightFillColor);
     }
 
     if (rabbitIndex == 0) {
@@ -113,12 +138,12 @@ function moveRabbit() {
     }
 
     // Move to the next node in the DFS path
-    rabbitIndex = (rabbitIndex + 1) % dfsPath.length;
+    rabbitIndex = (rabbitIndex + 1) % pathToUse.length;
     if (rabbitIndex - 1 >= 0) {
-        moveRabbitOnce(currentNode.x, currentNode.y, nodes[dfsPath[rabbitIndex - 1]].x, nodes[dfsPath[rabbitIndex - 1]].y)
+        moveRabbitOnce(currentNode.x, currentNode.y, nodes[pathToUse[rabbitIndex - 1]].x, nodes[pathToUse[rabbitIndex - 1]].y)
     }
     else {
-        moveRabbitOnce(currentNode.x, currentNode.y, nodes[dfsPath[dfsPath.length - 1]].x, nodes[dfsPath[dfsPath.length - 1]].y)
+        moveRabbitOnce(currentNode.x, currentNode.y, nodes[pathToUse[pathToUse.length - 1]].x, nodes[pathToUse[pathToUse.length - 1]].y)
     }
     
     // Loop the rabbit movement every second

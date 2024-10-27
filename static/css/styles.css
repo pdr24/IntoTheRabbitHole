@@ -7,7 +7,47 @@ html, body {
     box-sizing: border-box;
 }
 
+.form-container {
+    position: absolute;
+    width: 75%;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin-top: 20px;
+  }
+
+  input[type="text"], button {
+    padding: 1%;
+    font-size: 1.5vw;
+    margin-bottom: 1%;
+    width: 100%;
+  }
+
+  buttonlogin {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin: 40%;
+  }
+
+  buttonlogin:hover {
+    opacity: 0.7;
+  }
+
 /* Title style using DynaPuff font */
+.dynapuff-introTitle {
+    font-family: "DynaPuff", system-ui;
+    font-optical-sizing: auto;
+    font-weight: 700;  /* You can change to 400, 500, 600, etc., based on the weight you prefer */
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+    font-size: 70px;
+    border-radius: 5%;
+    margin-bottom: 10%;
+    color: #785c4a;
+    color: black;
+}
 .dynapuff-title1 {
     font-family: "DynaPuff", system-ui;
     font-optical-sizing: auto;
@@ -19,6 +59,7 @@ html, body {
     margin-bottom: 2%;
     color: #785c4a;
     color: black;
+    z-index: 10;
 }
 .dynapuff-title2 {
     font-family: "DynaPuff", system-ui;

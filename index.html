@@ -43,6 +43,8 @@
      * Add new users to locally stored JSON object
     **/
     function addUser(firstName, lastInitial, ageRange) {
+        // TODO: check that this is working and implement other aspects of data collection and storage in browser cookies
+        // TODO: once data is saved in cookies and someone signs out, email me the data if possible so it is not lost or overriden by the next user 
         localStorage.setItem('fname', JSON.stringify(firstName));
         localStorage.setItem('linitial', JSON.stringify(lastInitial));
         localStorage.setItem('agerange', JSON.stringify(ageRange));

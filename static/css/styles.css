@@ -25,11 +25,6 @@ html, body {
     margin-bottom: 1%;
     width: 100%;
   }
-
-  button:hover {
-    opacity: 0.9;
-    background-image: (to bottom, rgba(97, 73, 57, 1), rgba(97, 73, 57, 0.95));
-  }
   
 
   buttonlogin {
@@ -195,6 +190,9 @@ body {
     cursor: pointer;
     position: absolute;  /* Position the button at the bottom of the body */
     bottom: 5vh;   
+}
+.next-button:hover {
+    opacity: 0.95;
 }
 
 .button-container {

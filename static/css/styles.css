@@ -9,11 +9,14 @@ html, body {
 
 .form-container {
     position: absolute;
-    width: 75%;
-    top: 50%;
+    width: 60%;
+    height: 75%;
+    top: 48%;
     left: 50%;
     transform: translate(-50%, -50%);
     margin-top: 20px;
+    background-image: linear-gradient(to bottom, rgba(255,182,104, 1.0), rgba(255,182,104, 1.0));
+    border-radius: 20px;
   }
 
   input[type="text"], button {
@@ -22,6 +25,12 @@ html, body {
     margin-bottom: 1%;
     width: 100%;
   }
+
+  button:hover {
+    opacity: 0.9;
+    background-image: (to bottom, rgba(97, 73, 57, 1), rgba(97, 73, 57, 0.95));
+  }
+  
 
   buttonlogin {
     background-color: #4CAF50;
@@ -45,7 +54,8 @@ html, body {
     font-variation-settings: "wdth" 100;
     font-size: 70px;
     border-radius: 5%;
-    margin-bottom: 10%;
+    margin-bottom: 6%;
+    margin-top: 7%;
     color: #785c4a;
     color: black;
 }

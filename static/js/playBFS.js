@@ -1,3 +1,5 @@
+// TODO: combine with playDFS.js
+
 var curr_level = 0; // keeps track of current level for use with game logic 
 var rabbitScaleFactor = 0.4; // scale factor to size rabbit image according to screen size
 

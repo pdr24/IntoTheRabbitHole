@@ -21,6 +21,7 @@
     }
 
     function validateForm() {
+      console.log("login was clicked")
       var input1 = document.getElementById("input1").value;
       var input2 = document.getElementById("input2").value;
       var input3 = document.getElementById("input3").value;
@@ -32,7 +33,7 @@
       // save current user's info to local storage
       addUser(input1, input2, input3);
 
-      // Redirect to instructions.html on successful validation
+      // Redirect to dfs_animation.html on successful validation
       window.location.href = 'dfs_animation.html';
   
       return false; // Prevent form submission
@@ -55,20 +56,19 @@
 
     <form id="stringForm" onsubmit="return validateForm()" method="post">
       <input type="text" id="input1" name="input1" placeholder="Enter your first name" required 
-             oninput="changeFontColor('input1')" style="width: 45vw; height: 5vh; font-size: 25px; color: gray; border: 0.2vw solid rgba(73, 138, 12, 1);"><br>
+             oninput="changeFontColor('input1')" style="width: 45vw; height: 5vh; font-size: 25px; color: gray; border: 0.2vw solid rgba(73, 138, 12, 1); border-radius: 20px;"><br>
       <input type="text" id="input2" name="input2" placeholder="Enter your last initial" required 
-             oninput="changeFontColor('input2')" style="width: 45vw; height: 5vh; font-size: 25px; color: gray; border: 0.2vw solid rgba(73, 138, 12, 1);"><br>
+             oninput="changeFontColor('input2')" style="width: 45vw; height: 5vh; font-size: 25px; color: gray; border: 0.2vw solid rgba(73, 138, 12, 1); border-radius: 20px;"><br>
 
       <select id="input3" name="input3" required onchange="changeFontColor('input3')" 
-              style="width: 46.4vw; height: 5vh; margin-bottom: 10px; font-size: 20px; color: gray; left: 10%; border: 0.2vw solid rgba(73, 138, 12, 1);">
+              style="width: 46.7vw; height: 8vh; margin-bottom: 10px; font-size: 20px; color: gray; left: 10%; border: 0.2vw solid rgba(73, 138, 12, 1); border-radius: 20px;">
         <option value="" style="font-size: 22px; color: gray;" disabled selected>Select grade level</option>
         <option value="1" style="font-size: 22px; color: gray;">6</option>
         <option value="2" style="font-size: 22px; color: gray;">7</option>
         <option value="3" style="font-size: 22px; color: gray;">8</option>
-
       </select>
 
-      <buttonlogin type="submit" style="width:66.4vw; height: 20vh; margin-top: 1vw; font-family: Bradley Hand; font-size: 2.7vw; border: 0.2vw solid rgba(73, 138, 12, 1);">Login</buttonlogin>
+      <button type="submit" style="width:15vw; height: 10vh; margin: 10vw; font-family: Bradley Hand; font-size: 2.7vw; border: 0.2vw solid rgba(73, 138, 12, 1); background-color: rgba(73, 138, 12, 1); border-radius: 20px;">Login</button>
     </form>
   </div>
 </body>

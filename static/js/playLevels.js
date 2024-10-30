@@ -1,15 +1,14 @@
-// TODO: combine with playBFS.js 
-
 var curr_level = 0; // keeps track of current level for use with game logic 
 var rabbitScaleFactor = 0.4; // scale factor to size rabbit image according to screen size
 var algorithm = ''; // stores the algorithm that should be used in the level 
 var path = null; // stores path for the current level 
 
-// to read and update the current level 
 document.addEventListener("DOMContentLoaded", function() {
-    const pageBody = document.body;
-    const pageId = pageBody.getAttribute('data-page-id');  // Get the page-specific value
 
+    const pageBody = document.body;
+    const pageId = pageBody.getAttribute('data-page-id');  // Get the page-specific id value 
+
+    // update variables as needed based on the page id 
     if (pageId === 'dfs_level1') {
         console.log("This is DFS Level 1");
         curr_level = 1;
@@ -20,9 +19,11 @@ document.addEventListener("DOMContentLoaded", function() {
         curr_level = 2;
         algorithm = 'bfs';
     }
-});
+    else {
+        // error message if page id is not recognized 
+        console.log("Error: the page id " + pageId + " is not handled in playLevels.js")
+    }
 
-document.addEventListener("DOMContentLoaded", function() {
     const canvas = document.getElementById('tunnelsystem');
     const buttonContainer = document.querySelector('.button-container'); // Get button container
     const ctx = canvas.getContext('2d');

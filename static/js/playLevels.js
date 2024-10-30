@@ -1,20 +1,24 @@
-// TODO: combine with playDFS.js
+// TODO: combine with playBFS.js 
 
 var curr_level = 0; // keeps track of current level for use with game logic 
 var rabbitScaleFactor = 0.4; // scale factor to size rabbit image according to screen size
+var algorithm = ''; // stores the algorithm that should be used in the level 
+var path = null; // stores path for the current level 
 
 // to read and update the current level 
 document.addEventListener("DOMContentLoaded", function() {
     const pageBody = document.body;
     const pageId = pageBody.getAttribute('data-page-id');  // Get the page-specific value
 
-    if (pageId === 'level1') {
-        console.log("This is Level 1");
+    if (pageId === 'dfs_level1') {
+        console.log("This is DFS Level 1");
         curr_level = 1;
+        algorithm = 'dfs';
     } 
-    else if (pageId === 'level2') {
-        console.log("This is Level 2");
+    else if (pageId === 'bfs_level1') {
+        console.log("This is BFS Level 1");
         curr_level = 2;
+        algorithm = 'bfs';
     }
 });
 
@@ -51,28 +55,65 @@ document.addEventListener("DOMContentLoaded", function() {
         constructor(nodes_val = [], edges_val = []) {
             this._nodes = nodes_val; // array of nodes
             this._edges = edges_val; // array of edges
+            this.updateDFSPath(); // update dfs path based on nodes and edges 
             this.updateBFSPath(); // update bfs path based on nodes and edges 
         }
 
-        updateBFSPath() {
-            // TODO: implement this
+        updateDFSPath() {
+            // TODO: change this to be hard coded since i;ll only be working with 1 tunnel 
 
+            const visited = new Array(nodes.length).fill(false); // To keep track of visited nodes
+            const dfsPath = []; // To store the final DFS path
+            const nodeCount = nodes.length;
+
+            const adjacencyList = Array.from({ length: nodeCount }, () => []);
+
+            // Add edges to the adjacency list
+            for (const [start, end] of edges) {
+                adjacencyList[start].push(end);
+                adjacencyList[end].push(start); // Since it's an undirected graph
+            }
+
+            // Helper function to perform DFS
+            function dfs(currentNode) {
+                // Mark the current node as visited and add it to the path
+                visited[currentNode] = true;
+                dfsPath.push(currentNode);
+
+                // Explore neighbors of the current node
+                const neighbors = adjacencyList[currentNode];
+                for (const neighbor of neighbors) {
+                    if (!visited[neighbor]) {
+                        dfs(neighbor);
+                        // Backtrack to the current node after visiting a neighbor
+                        dfsPath.push(currentNode);
+                    }
+                }
+            }
+
+            // Perform DFS starting from node 0 (assuming 0 is the starting node)
+            dfs(0);
+
+            const pathLabels = dfsPath.map(index => nodes[index].label);
+            this._dfsPath = pathLabels;
+        }
+
+        updateBFSPath() {
             // hard coded for now: 
             var bfs = ['Start', 'B', 'Start', 'E', 'Start', 'B', 'C', 'B', 'Start', 'E', 'F', 'E', 'J', 'E', 'Start', 'B', 'C', 'D', 'C', 'B', 'Start', 'E', 'F', 'G', 'F', 'H (Carrot)', 'F', 'I', 'E', 'J'];
             this._bfsPath = bfs;
         }
-        
-        
-        
 
         addNode(x, y, label) {
             this.nodes.push({ x, y, label });
+            this.updateDFSPath();
             this.updateBFSPath();
         }
 
         addEdge(node1Index, node2Index) {
             if (node1Index < this.nodes.length && node2Index < this.nodes.length) {
                 this.edges.push([node1Index, node2Index]);
+                this.updateDFSPath();
                 this.updateBFSPath();
             } 
             else {
@@ -109,6 +150,14 @@ document.addEventListener("DOMContentLoaded", function() {
             this.edges = newEdges;
         }
 
+        get dfsPath() {
+            return this._dfsPath;
+        }
+
+        set dfsPath(newPath) {
+            this.dfsPath = newPath;
+        }
+
         get bfsPath() {
             return this._bfsPath;
         }
@@ -136,14 +185,6 @@ document.addEventListener("DOMContentLoaded", function() {
         [0, 4], [4, 5], [5, 6],
         [5, 7], [5, 8], [4, 9]
     ];
-
-    // TODO: to be implemented later... start with a hard coded graph for now
-    function generatePuzzle() {
-        // randomly generate a puzzle 
-        // store it as graph
-        // return puzzle graph 
-    }
-
 
     var puzzle = new TunnelSystem(nodes, edges);
 
@@ -235,7 +276,15 @@ document.addEventListener("DOMContentLoaded", function() {
     // has important game-play logic 
     function nodeClicked(node, puzzleObj) {
         console.log(`Node ${node.label} clicked!`);
-        const path = puzzleObj.bfsPath;
+
+        var path = null;
+
+        if (algorithm == 'dfs') {
+            path = puzzleObj.dfsPath;
+        }
+        else {
+            path = puzzleObj.bfsPath;
+        }
 
         // update userAllClicks
         userAllClicks.push(node.label)
@@ -452,7 +501,15 @@ document.addEventListener("DOMContentLoaded", function() {
     
         // Next Level button functionality
         document.getElementById('nextLevelButton').addEventListener('click', function() {
-            window.location.href = 'index.html'; // Redirect to next level (just going to index.html for now)
+            var next_level_page = null;
+
+            if (curr_level == 1) {
+                next_level_page = 'bfs_animation.html'; // after dfs level 1, redirect to bfs animation
+            }
+            else if (curr_level == 2) {
+                next_level_page = 'index.html'; // after bfs level, redirect to index.html for now 
+            }
+            window.location.href = next_level_page; // Redirect to next level 
         });
     }
     
@@ -470,27 +527,38 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // TODO: do all of these and implement the methods above 
-    // randomly select or generate puzzle 
-    // draw graph according to puzzle 
-    // load rabbit into starting point 
+    // randomly select the carrot position 
+
     // have var userAllClicks to keep track of the clicks the user has made 
     // have var userCorrectClicks to keep track of the correct selections to see how far along the path they are right now
     // validateUserClick will compare the user's click to what should be the next click according to puzzle 
 
-    // var puzzle = generatePuzzle(); // change it to hard coded puzzle at first if needed 
+    // create TunnelSystem object storing the puzzle 
     var puzzle = new TunnelSystem(nodes, edges);
-    console.log(puzzle.bfsPath); // for testing purposes 
+
+    // update path depending on the algorithm for the current level 
+    if (curr_level == 1) {
+        path = puzzle.dfsPath;
+    }
+    else {
+        path = puzzle.bfsPath;
+    }
+    console.log(path); // for testing purposes 
     
-    drawGraph(puzzle); // draw puzzle as tunnel system 
-    loadRabbitToStart(puzzle); // draw rabbit at starting point of the tunnel according to puzzle 
-    var userAllClicks = [];
-    var userCorrectClicks = [];
-    var currIndex = 1; // start at 1 b/c bfsPath has 'Start' at index = 0 
+    // draw puzzle as tunnel system on the UI
+    drawGraph(puzzle); 
+
+    // draw rabbit at starting point of the tunnel according to puzzle 
+    loadRabbitToStart(puzzle);  
+
+    // store some user data before it is loaded into the browser's cookies 
+    var userAllClicks = []; // stores all the clicks the user has made 
+    var userCorrectClicks = []; // stores the correct clicks (for comparison with the path to see what the user's next click should be)
+    var currIndex = 1; // start at 1 b/c path has 'Start' at index = 0 
 
 });
 
-// TODO: check the updateBFSPath function on other graphs 
-// TODO: make error message show up above rabbit image 
+
 // TODO: add data saving 
 
 // TODO: ADD MESSAGE OR CARROT IMAGE TO SHOW ONCE THE CARROT HAS BEEN REACHED!!!!!!!

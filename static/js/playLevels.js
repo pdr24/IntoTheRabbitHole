@@ -203,7 +203,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    const nodes = [
+    var nodes = [
         {x: 100, y: 100, label: 'Start'},  
         {x: 300, y: 100, label: 'B'},
         {x: 500, y: 150, label: 'C'},
@@ -211,18 +211,16 @@ document.addEventListener("DOMContentLoaded", function() {
         {x: 300, y: 300, label: 'E'},
         {x: 500, y: 300, label: 'F'},  
         {x: 700, y: 300, label: 'G'},  
-        {x: 400, y: 500, label: 'H (Carrot)'},  
+        {x: 400, y: 500, label: 'H'},  
         {x: 600, y: 500, label: 'I'},  
         {x: 100, y: 300, label: 'J'}
     ];
 
-    const edges = [
+    var edges = [
         [0, 1], [1, 2], [2, 3],
         [0, 4], [4, 5], [5, 6],
         [5, 7], [5, 8], [4, 9]
     ];
-
-    var puzzle = new TunnelSystem(nodes, edges);
 
     // draws nodes of tunnel system as buttons
     function drawButtons(puzzle) {
@@ -562,12 +560,24 @@ document.addEventListener("DOMContentLoaded", function() {
         // save to browser cookies 
     }
 
+    function randomlySelectCarrotPosition(nodes) {
+        // generate random index to place the carrot at
+        // excluding the start index 
+        var num_nodes = nodes.length;
+        var randIndex = Math.floor(Math.random() * (num_nodes - 1)) + 1;
+
+        // assign the carrot to the node label of the random index 
+        console.log("Randomly selected node for carrot: " + nodes[randIndex].label);
+        nodes[randIndex].label = nodes[randIndex].label + ' (Carrot)';
+
+        return nodes; 
+    }
+
     // TODO: do all of these and implement the methods above 
     // randomly select the carrot position 
 
-    // have var userAllClicks to keep track of the clicks the user has made 
-    // have var userCorrectClicks to keep track of the correct selections to see how far along the path they are right now
-    // validateUserClick will compare the user's click to what should be the next click according to puzzle 
+    // randomly select the carrot's position among the nodes 
+    nodes = randomlySelectCarrotPosition(nodes);
 
     // create TunnelSystem object storing the puzzle 
     var puzzle = new TunnelSystem(nodes, edges);

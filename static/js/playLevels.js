@@ -3,9 +3,6 @@ var rabbitScaleFactor = 0.4; // scale factor to size rabbit image according to s
 var algorithm = ''; // stores the algorithm that should be used in the level 
 var path = null; // stores path for the current level 
 
-const fullDFSPath = [0, 1, 2, 3, 2, 1, 0, 4, 5, 6, 5, 7, 5, 8, 5, 4, 9];
-const fullBFSPath = [0, 1, 0, 4, 0, 1, 2, 1, 0, 4, 5, 4, 9, 4, 0, 1, 2, 3, 2, 1, 0, 4, 5, 6, 5, 7, 5, 8, 4, 9];
-
 document.addEventListener("DOMContentLoaded", function() {
 
     const pageBody = document.body;
@@ -63,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function() {
             this.updateBFSPath(); // update bfs path based on nodes and edges 
         }
 
-        updateDFSPath() {
+        updateDFSPathOLD() {
             // TODO: change this to be hard coded since i;ll only be working with 1 tunnel 
 
             const visited = new Array(nodes.length).fill(false); // To keep track of visited nodes
@@ -100,6 +97,25 @@ document.addEventListener("DOMContentLoaded", function() {
 
             const pathLabels = dfsPath.map(index => nodes[index].label);
             this._dfsPath = pathLabels;
+            console.log("PROCESSED DFS PATH OLD: " + pathLabels);
+        }
+
+        updateDFSPath() {
+            var dfs = ['Start', 'B', 'C', 'D', 'C', 'B', 'Start', 'E', 'F', 'G', 'F', 'H', 'F', 'I', 'F', 'E', 'J'];
+
+            // add 'carrot' label to dfs path as needed based on the location of the carrot 
+            for (let i = 0; i < this._nodes.length; i++) {
+                if (this._nodes[i].label.includes("Carrot")) {
+                    for (let j = 0; j < dfs.length; j++) {
+                        if (dfs[j] == this._nodes[i].label.substring(0,1)) {
+                            dfs[j] = dfs[j] + " (Carrot)";
+                        }
+                    }
+                }
+            }
+            console.log("PROCESSED DFS PATH: " + dfs);
+
+            this._dfsPath = dfs;
         }
 
         updateBFSPath() {
@@ -110,7 +126,7 @@ document.addEventListener("DOMContentLoaded", function() {
             var bfs = ['Start', 'B', 'Start', 'E', 'Start', 'B', 'C', 'B', 'Start', 'E', 'F', 'E', 'J', 'E', 'Start', 'B', 'C', 'D', 'C', 'B', 'Start', 'E', 'F', 'G', 'F', 'H', 'F', 'I', 'E', 'J'];
             
             // add 'carrot' label to bfs path as needed based on the location of the carrot 
-            for (let i = 0; i < this._edges.length; i++) {
+            for (let i = 0; i < this._nodes.length; i++) {
                 if (this._nodes[i].label.includes("Carrot")) {
                     for (let j = 0; j < bfs.length; j++) {
                         if (bfs[j] == this._nodes[i].label.substring(0,1)) {
@@ -119,7 +135,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     }
                 }
             }
-            console.log("PROCESSED PATH: " + bfs);
+            console.log("PROCESSED BFS PATH: " + bfs);
             
             this._bfsPath = bfs;
         }
@@ -191,11 +207,11 @@ document.addEventListener("DOMContentLoaded", function() {
         {x: 100, y: 100, label: 'Start'},  
         {x: 300, y: 100, label: 'B'},
         {x: 500, y: 150, label: 'C'},
-        {x: 700, y: 100, label: 'D (Carrot)'},  
+        {x: 700, y: 100, label: 'D'},  
         {x: 300, y: 300, label: 'E'},
         {x: 500, y: 300, label: 'F'},  
         {x: 700, y: 300, label: 'G'},  
-        {x: 400, y: 500, label: 'H'},  
+        {x: 400, y: 500, label: 'H (Carrot)'},  
         {x: 600, y: 500, label: 'I'},  
         {x: 100, y: 300, label: 'J'}
     ];

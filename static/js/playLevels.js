@@ -3,6 +3,9 @@ var rabbitScaleFactor = 0.4; // scale factor to size rabbit image according to s
 var algorithm = ''; // stores the algorithm that should be used in the level 
 var path = null; // stores path for the current level 
 
+const fullDFSPath = [0, 1, 2, 3, 2, 1, 0, 4, 5, 6, 5, 7, 5, 8, 5, 4, 9];
+const fullBFSPath = [0, 1, 0, 4, 0, 1, 2, 1, 0, 4, 5, 4, 9, 4, 0, 1, 2, 3, 2, 1, 0, 4, 5, 6, 5, 7, 5, 8, 4, 9];
+
 document.addEventListener("DOMContentLoaded", function() {
 
     const pageBody = document.body;
@@ -101,7 +104,23 @@ document.addEventListener("DOMContentLoaded", function() {
 
         updateBFSPath() {
             // hard coded for now: 
-            var bfs = ['Start', 'B', 'Start', 'E', 'Start', 'B', 'C', 'B', 'Start', 'E', 'F', 'E', 'J', 'E', 'Start', 'B', 'C', 'D', 'C', 'B', 'Start', 'E', 'F', 'G', 'F', 'H (Carrot)', 'F', 'I', 'E', 'J'];
+            // var bfs = ['Start', 'B', 'Start', 'E', 'Start', 'B', 'C', 'B', 'Start', 'E', 'F', 'E', 'J', 'E', 'Start', 'B', 'C', 'D', 'C', 'B', 'Start', 'E', 'F', 'G', 'F', 'H (Carrot)', 'F', 'I', 'E', 'J'];
+            
+            // bfs path disregarding the location of the carrot 
+            var bfs = ['Start', 'B', 'Start', 'E', 'Start', 'B', 'C', 'B', 'Start', 'E', 'F', 'E', 'J', 'E', 'Start', 'B', 'C', 'D', 'C', 'B', 'Start', 'E', 'F', 'G', 'F', 'H', 'F', 'I', 'E', 'J'];
+            
+            // add 'carrot' label to bfs path as needed based on the location of the carrot 
+            for (let i = 0; i < this._edges.length; i++) {
+                if (this._nodes[i].label.includes("Carrot")) {
+                    for (let j = 0; j < bfs.length; j++) {
+                        if (bfs[j] == this._nodes[i].label.substring(0,1)) {
+                            bfs[j] = bfs[j] + " (Carrot)";
+                        }
+                    }
+                }
+            }
+            console.log("PROCESSED PATH: " + bfs);
+            
             this._bfsPath = bfs;
         }
 
@@ -172,11 +191,11 @@ document.addEventListener("DOMContentLoaded", function() {
         {x: 100, y: 100, label: 'Start'},  
         {x: 300, y: 100, label: 'B'},
         {x: 500, y: 150, label: 'C'},
-        {x: 700, y: 100, label: 'D'},  
+        {x: 700, y: 100, label: 'D (Carrot)'},  
         {x: 300, y: 300, label: 'E'},
         {x: 500, y: 300, label: 'F'},  
         {x: 700, y: 300, label: 'G'},  
-        {x: 400, y: 500, label: 'H (Carrot)'},  
+        {x: 400, y: 500, label: 'H'},  
         {x: 600, y: 500, label: 'I'},  
         {x: 100, y: 300, label: 'J'}
     ];
@@ -301,7 +320,7 @@ document.addEventListener("DOMContentLoaded", function() {
             drawRabbit(node.x, node.y);
 
             // draw path 
-            console.log("prevNode x and y: " + prevNode.x + ", " + prevNode.y);
+            // console.log("prevNode x and y: " + prevNode.x + ", " + prevNode.y); // testing purposes 
             ctx.beginPath();
             ctx.moveTo(prevNode.x, prevNode.y); // Move to the previous node's position
             ctx.lineTo(node.x, node.y); // Draw a line to the current node's position
@@ -544,7 +563,7 @@ document.addEventListener("DOMContentLoaded", function() {
     else {
         path = puzzle.bfsPath;
     }
-    console.log(path); // for testing purposes 
+    console.log("PATH: " + path); // for testing purposes 
     
     // draw puzzle as tunnel system on the UI
     drawGraph(puzzle); 

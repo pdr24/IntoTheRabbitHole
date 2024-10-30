@@ -3,7 +3,7 @@ var algorithm = '';
 
 document.addEventListener("DOMContentLoaded", function() {
     const pageBody = document.body;
-    const pageId = pageBody.getAttribute('data-page-id');  // Get the page-specific value
+    const pageId = pageBody.getAttribute('data-page-id');  // Get the page-specific id value
 
     if (pageId === 'dfs_animation') {
         algorithm = 'dfs'

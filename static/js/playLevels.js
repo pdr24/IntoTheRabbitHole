@@ -2,6 +2,7 @@ var curr_level = 0; // keeps track of current level for use with game logic
 var rabbitScaleFactor = 0.4; // scale factor to size rabbit image according to screen size
 var algorithm = ''; // stores the algorithm that should be used in the level 
 var path = null; // stores path for the current level 
+var next_level_page = null; // stores the next page to redirect to 
 
 document.addEventListener("DOMContentLoaded", function() {
 
@@ -13,11 +14,25 @@ document.addEventListener("DOMContentLoaded", function() {
         console.log("This is DFS Level 1");
         curr_level = 1;
         algorithm = 'dfs';
+        next_level_page = 'dfs_level2.html';
     } 
     else if (pageId === 'bfs_level1') {
         console.log("This is BFS Level 1");
-        curr_level = 2;
+        curr_level = 3;
         algorithm = 'bfs';
+        next_level_page = 'bfs_level2.html';
+    }
+    else if (pageId == "dfs_level2") {
+        console.log("This is DFS Level 2");
+        curr_level = 2;
+        algorithm = 'dfs';
+        next_level_page = 'bfs_animation.html';
+    }
+    else if (pageId == "bfs_level2") {
+        console.log("This is BFS Level 2");
+        curr_level = 4;
+        algorithm = 'bfs';
+        next_level_page = 'index.html';
     }
     else {
         // error message if page id is not recognized 
@@ -535,6 +550,7 @@ document.addEventListener("DOMContentLoaded", function() {
     
         // Next Level button functionality
         document.getElementById('nextLevelButton').addEventListener('click', function() {
+            /** 
             var next_level_page = null;
 
             if (curr_level == 1) {
@@ -542,8 +558,9 @@ document.addEventListener("DOMContentLoaded", function() {
             }
             else if (curr_level == 2) {
                 next_level_page = 'index.html'; // after bfs level, redirect to index.html for now 
-            }
+            } */
             window.location.href = next_level_page; // Redirect to next level 
+
         });
     }
     

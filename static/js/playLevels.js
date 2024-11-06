@@ -266,6 +266,9 @@ document.addEventListener("DOMContentLoaded", function() {
             button.style.borderRadius = '50%';  // Make the button circular
             // button.style.backgroundColor = nodeStyle.fillColor;
             button.style.backgroundImage = 'linear-gradient(to bottom, rgba(97, 73, 57, 1), rgba(97, 73, 57, 0.95))';  // Gradient with rgba
+            
+            // temporary: recolor option if you want more contrast 
+            // button.style.backgroundImage = 'linear-gradient(to bottom, rgba(196, 164, 140, 1), rgba(196, 164, 140, 0.95))';  // Gradient with rgba
 
             button.addEventListener('mouseover', function() {
                 button.style.backgroundImage = 'linear-gradient(to bottom, rgba(97, 73, 57, 0.95), rgba(97, 73, 57, 1.0))';  // Hover color

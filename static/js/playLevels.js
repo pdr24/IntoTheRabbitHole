@@ -16,21 +16,33 @@ document.addEventListener("DOMContentLoaded", function() {
         algorithm = 'dfs';
         next_level_page = 'dfs_level2.html';
     } 
-    else if (pageId === 'bfs_level1') {
-        console.log("This is BFS Level 1");
-        curr_level = 3;
-        algorithm = 'bfs';
-        next_level_page = 'bfs_level2.html';
-    }
     else if (pageId == "dfs_level2") {
         console.log("This is DFS Level 2");
         curr_level = 2;
         algorithm = 'dfs';
+        next_level_page = 'dfs_level3.html';
+    }
+    else if (pageId == "dfs_level3") {
+        console.log("This is DFS Level 3");
+        curr_level = 3;
+        algorithm = 'dfs';
         next_level_page = 'bfs_animation.html';
+    }
+    else if (pageId === 'bfs_level1') {
+        console.log("This is BFS Level 1");
+        curr_level = 4;
+        algorithm = 'bfs';
+        next_level_page = 'bfs_level2.html';
     }
     else if (pageId == "bfs_level2") {
         console.log("This is BFS Level 2");
-        curr_level = 4;
+        curr_level = 5;
+        algorithm = 'bfs';
+        next_level_page = 'bfs_level3.html';
+    }
+    else if (pageId == "bfs_level3") {
+        console.log("This is BFS Level 3");
+        curr_level = 6;
         algorithm = 'bfs';
         next_level_page = 'index.html';
     }
@@ -543,28 +555,26 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // displays good job modal on screen 
     function showCongratsModal() {
+        
+        // TODO: show carrot found (either on the congrats message or separately beforehand)
+        
         const modal = document.getElementById('congratulationsModal');
         modal.style.display = 'flex'; // Make the modal visible
     
-        // Play Again button functionality
-        document.getElementById('playAgainButton').addEventListener('click', function() {
-            resetLevel();  // Call function to reset the current level
-        });
+        if (curr_level == 3 || curr_level == 6) {
+            // Play Again button functionality
+            document.getElementById('playAgainButton').addEventListener('click', function() {
+                resetLevel();  // Call function to reset the current level
+            });
+        }
     
+        
         // Next Level button functionality
         document.getElementById('nextLevelButton').addEventListener('click', function() {
-            /** 
-            var next_level_page = null;
-
-            if (curr_level == 1) {
-                next_level_page = 'bfs_animation.html'; // after dfs level 1, redirect to bfs animation
-            }
-            else if (curr_level == 2) {
-                next_level_page = 'index.html'; // after bfs level, redirect to index.html for now 
-            } */
             window.location.href = next_level_page; // Redirect to next level 
 
         });
+        
     }
     
     // restarts the level 

@@ -655,5 +655,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 // TODO: ADD MESSAGE OR CARROT IMAGE TO SHOW ONCE THE CARROT HAS BEEN REACHED!!!!!!!
 
+// TODO: CHALLENGE LEVEL TODOS:
 // TODO: add instructions/intro modal to challenge level with 'start' button 
 // TODO: add timer to challenge level logic 

@@ -56,6 +56,10 @@ document.addEventListener("DOMContentLoaded", function() {
         algorithm = algorithms[randAlgNum]
         console.log("Randomly selected algorithm: " + algorithm)
         
+        // update html text with selected algorithm
+        const algorithmHeader = document.querySelector(".dynapuff-title2");
+        algorithmHeader.textContent = "Algorithm: " + algorithm.toUpperCase();
+
         next_level_page = 'index.html';
     }
     else {
@@ -651,10 +655,5 @@ document.addEventListener("DOMContentLoaded", function() {
 
 // TODO: ADD MESSAGE OR CARROT IMAGE TO SHOW ONCE THE CARROT HAS BEEN REACHED!!!!!!!
 
-
-/** 
- * organization considerations: 
- *  - use jsx modules like in HealthSift for better organization 
- *  - allows importing functions and stuff from one file to another 
- *  - could do like tunnelsystem.jsx, visualization.jsx, playGame.jsx maybe 
- */
+// TODO: add instructions/intro modal to challenge level with 'start' button 
+// TODO: add timer to challenge level logic 

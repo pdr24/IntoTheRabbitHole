@@ -7,6 +7,40 @@ html, body {
     box-sizing: border-box;
 }
 
+.progressButtonComplete {
+    position: relative;
+    width: 5vh;
+    height: 5vh;
+    border-radius: 50%;
+    outline: rgb(73, 138, 12);
+    background-color: rgb(73, 138, 12);
+    padding: 0;
+    margin: 0;
+    
+  }
+  .progressButtonCurrent {
+    position: relative;
+    width: 5vh;
+    height: 5vh;
+    border-radius: 50%;
+    outline: rgba(255,182,104);
+    background-color: rgba(255,182,104);
+    padding: 0;
+    margin: 0;
+    
+  }
+  .progressButtonFuture {
+    position: relative;
+    width: 5vh;
+    height: 5vh;
+    border-radius: 50%;
+    outline: grey;
+    background-color: grey;
+    padding: 0;
+    margin: 0;
+    
+  }
+
 .form-container {
     position: absolute;
     width: 75%;
@@ -117,9 +151,10 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;  
-    height: 100vh;   
+    height: 92vh;   
     width: 100%;         
-    padding: 20px;    
+    padding: 0px;   
+     
 }
 
 /* Ensure the canvas container is positioned correctly */

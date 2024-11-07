@@ -44,6 +44,18 @@ document.addEventListener("DOMContentLoaded", function() {
         console.log("This is BFS Level 3");
         curr_level = 6;
         algorithm = 'bfs';
+        next_level_page = 'challenge_level.html';
+    }
+    else if (pageId == "challenge_level") {
+        console.log("This is the challenge level");
+        curr_level = 7;
+
+        // pick algorithm at random
+        let randAlgNum = Math.round(Math.random());
+        let algorithms = ['dfs', 'bfs']
+        algorithm = algorithms[randAlgNum]
+        console.log("Randomly selected algorithm: " + algorithm)
+        
         next_level_page = 'index.html';
     }
     else {

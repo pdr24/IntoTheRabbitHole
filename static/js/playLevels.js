@@ -578,12 +578,16 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // displays good job modal on screen 
-    function showCongratsModal() {
+    function showCongratsModal(score = null) {
         
         // TODO: show carrot found (either on the congrats message or separately beforehand)
         
         const modal = document.getElementById('congratulationsModal');
         modal.style.display = 'flex'; // Make the modal visible
+
+        if (score != null) {
+            document.getElementById("userScore").textContent = "Score: " + score;
+        }
     
         if (curr_level == 3 || curr_level == 6 || curr_level == 7) {
             // Play Again button functionality
@@ -683,6 +687,18 @@ document.addEventListener("DOMContentLoaded", function() {
             }
             // display the new score 
             scoreboardElement.innerText = 'Score: ' + newScore;
+        }
+    }
+
+    function getScoreFromScoreboard() {
+        var scoreboardElement = document.getElementById('scoreboard');
+
+        if (scoreboardElement) {
+            // get current score 
+            score = Number(scoreboardElement.innerText.substring(scoreboardElement.innerText.indexOf(':') + 2));
+            
+            // return the current score 
+            return score;
         }
     }
 
@@ -829,7 +845,8 @@ document.addEventListener("DOMContentLoaded", function() {
     
             if (secondsLeft <= 0) {
                 clearInterval(timerInterval); // Stop the timer when time is up
-                showCongratsModal();
+                score = getScoreFromScoreboard();
+                showCongratsModal(score);
             }
         }, 1000); // Update timer every second
     

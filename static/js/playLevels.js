@@ -615,6 +615,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
+    // create timer div for the challenge level 
     function makeTimer() {
         // Display timer element
         var timerElement = document.createElement('div');
@@ -643,6 +644,14 @@ document.addEventListener("DOMContentLoaded", function() {
     
         // Append the timer element to the document body
         document.body.appendChild(timerElement);
+    }
+
+    // update timer to show the parameter seconds 
+    function updateTimerDisplay(seconds) {
+        var timerElement = document.getElementById('timer');
+        if (timerElement) {
+            timerElement.innerText = seconds + 's';
+        }
     }
     
 

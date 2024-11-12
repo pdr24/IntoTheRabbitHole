@@ -1,4 +1,5 @@
 var curr_level = 0; // keeps track of current level for use with game logic 
+var challengeLevelLength = 15; // stores timer length for challenge level in seconds 
 var rabbitScaleFactor = 0.4; // scale factor to size rabbit image according to screen size
 var algorithm = ''; // stores the algorithm that should be used in the level 
 var path = null; // stores path for the current level 
@@ -60,7 +61,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const algorithmHeader = document.querySelector(".dynapuff-title2");
         algorithmHeader.textContent = "Algorithm: " + algorithm.toUpperCase();
 
-        next_level_page = 'index.html'; // temporary for testing purposes 
+        next_level_page = 'postsurvey_link.html'; // temporary for testing purposes 
 
     }
     else {
@@ -819,7 +820,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // create timer element to display the timer 
         makeTimer();
-        secondsLeft = 15; // timer starts at 15 seconds (for now)
+        secondsLeft = challengeLevelLength; // timer starts at 15 seconds (for now)
         updateTimerDisplay(secondsLeft);
 
         var timerInterval = setInterval(function() {

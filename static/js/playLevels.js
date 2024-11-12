@@ -60,6 +60,9 @@ document.addEventListener("DOMContentLoaded", function() {
         const algorithmHeader = document.querySelector(".dynapuff-title2");
         algorithmHeader.textContent = "Algorithm: " + algorithm.toUpperCase();
 
+        // create timer element to display the timer 
+        makeTimer();
+
         next_level_page = 'challenge_level.html';
     }
     else {
@@ -604,6 +607,44 @@ document.addEventListener("DOMContentLoaded", function() {
         // Logic to reset the level, this could reload the page for now
         window.location.reload(); 
     }
+
+    function updateTimerDisplay(seconds) {
+        var timerElement = document.getElementById('timer');
+        if (timerElement) {
+            timerElement.innerText = seconds + 's';
+        }
+    }
+
+    function makeTimer() {
+        // Display timer element
+        var timerElement = document.createElement('div');
+        timerElement.id = 'timer';
+        timerElement.style.position = 'absolute';
+        timerElement.style.left = '8%';
+        timerElement.style.top = '3%';
+        timerElement.style.fontSize = '2vh';
+        timerElement.style.fontFamily = 'DynaPuff';
+        timerElement.style.color = 'white';
+        timerElement.textContent = '90s';
+    
+        // Add outline and background color
+        timerElement.style.border = '2px solid black'; 
+        timerElement.style.backgroundColor = 'rgba(0, 0, 0, 0.9)'; 
+        timerElement.style.borderRadius = '50%'; // Make the border radius 50% to create a circle
+    
+        // Set width and height to ensure it's a circle
+        timerElement.style.width = '8vh'; // Adjust the width of the circle as needed
+        timerElement.style.height = '8vh'; // Adjust the height of the circle as needed
+    
+        // Center the text vertically and horizontally
+        timerElement.style.display = 'flex';
+        timerElement.style.alignItems = 'center';
+        timerElement.style.justifyContent = 'center';
+    
+        // Append the timer element to the document body
+        document.body.appendChild(timerElement);
+    }
+    
 
     function challenge_showNextPuzzle() {
 

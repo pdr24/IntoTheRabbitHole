@@ -570,7 +570,8 @@ document.addEventListener("DOMContentLoaded", function() {
             showCongratsModal();
         }
         else {
-            // level 3 game progression logic 
+            // challenge level game progression logic 
+            challenge_showNextPuzzle();
         }
     }
 
@@ -603,7 +604,68 @@ document.addEventListener("DOMContentLoaded", function() {
         // Logic to reset the level, this could reload the page for now
         window.location.reload(); 
     }
+
+    function challenge_showNextPuzzle() {
+
+        // pick next puzzle's algorithm at random
+        let randAlgNum = Math.round(Math.random());
+        let algorithms = ['dfs', 'bfs']
+        algorithm = algorithms[randAlgNum]
+        console.log("Randomly selected algorithm: " + algorithm)
+        
+        // update html text with selected algorithm
+        const algorithmHeader = document.querySelector(".dynapuff-title2");
+        algorithmHeader.textContent = "Algorithm: " + algorithm.toUpperCase();
+
+        // show next puzzle 
+        challenge_resetScreen();
+
+    }
+
+    function challenge_resetScreen() {
+        // Clear the canvas and button container
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        buttonContainer.innerHTML = ''; 
     
+        // Reset the necessary variables to their initial state
+        userAllClicks = [];
+        userCorrectClicks = [];
+        currIndex = 1;
+
+        // reset nodes 
+        nodes = [
+            {x: 100, y: 100, label: 'Start'},  
+            {x: 300, y: 100, label: 'B'},
+            {x: 500, y: 150, label: 'C'},
+            {x: 700, y: 100, label: 'D'},  
+            {x: 300, y: 300, label: 'E'},
+            {x: 500, y: 300, label: 'F'},  
+            {x: 700, y: 300, label: 'G'},  
+            {x: 400, y: 500, label: 'H'},  
+            {x: 600, y: 500, label: 'I'},  
+            {x: 100, y: 300, label: 'J'}
+        ];
+        // randomly select the carrot's position among the nodes again
+        nodes = randomlySelectCarrotPosition(nodes);
+
+        // create new TunnelSystem object storing the puzzle 
+        puzzle = new TunnelSystem(nodes, edges);
+    
+        // set path for the puzzle 
+        if (algorithm === 'dfs') {
+            path = puzzle.dfsPath;
+        } else {
+            path = puzzle.bfsPath;
+        }
+    
+        // Redraw the puzzle nodes, edges, and rabbit at the start position
+        drawGraph(puzzle);
+        loadRabbitToStart(puzzle);
+    
+        console.log("Level restarted");
+        
+    }
+
     // TODO: implement this 
     // saves data 
     function calculateAndSaveMetrics() {

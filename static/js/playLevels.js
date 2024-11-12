@@ -76,6 +76,9 @@ document.addEventListener("DOMContentLoaded", function() {
     const rabbitCanvas = document.getElementById('rabbit-canvas'); // get rabbit canvas for drawing the rabbit
     const rabbitCtx = rabbitCanvas.getContext('2d');
 
+    const carrotContainer = document.querySelector('.carrot-container'); // Get carrot container
+
+
     const errorContainer = document.querySelector('.error-message-div'); // Get button container
 
     canvas.width = 800;
@@ -623,7 +626,7 @@ document.addEventListener("DOMContentLoaded", function() {
             overlay.style.left = '0';
             overlay.style.width = '100vw';
             overlay.style.height = '100vh';
-            overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+            overlay.style.backgroundColor = 'rgba(0, 0, 0, 0)';
             overlay.style.zIndex = '9999';
             overlay.style.display = 'flex';
             overlay.style.justifyContent = 'center';
@@ -645,7 +648,7 @@ document.addEventListener("DOMContentLoaded", function() {
             const scaledY = (node.y / originalHeight) * containerHeight;
     
             // Style the carrot image to match the node
-            const imageSize = nodeStyle.radius * 4; // Adjust size based on node radius
+            const imageSize = nodeStyle.radius * 3.2; // Adjust size based on node radius
             carrotImage.style.position = 'absolute';
             carrotImage.style.width = `${imageSize}px`;
             carrotImage.style.height = `${imageSize}px`;
@@ -655,8 +658,8 @@ document.addEventListener("DOMContentLoaded", function() {
     
             // Append the image to the overlay
             //overlay.appendChild(carrotImage)
-            // append image to button container
-            buttonContainer.appendChild(carrotImage);
+            // append image to carrot container
+            carrotContainer.appendChild(carrotImage);
             // append overlay to prevent user from clicking stuff 
             document.body.appendChild(overlay);
     

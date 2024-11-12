@@ -567,22 +567,22 @@ document.addEventListener("DOMContentLoaded", function() {
         // TODO: save data
         calculateAndSaveMetrics(); // TODO: consider where this happens for challenge level... 
 
+        // select destination node to draw the carrot at 
+        const carrotNode = nodes.find(node => node.label.toLowerCase().includes('carrot'));
+
         if (curr_level != 7) {
             // display success message and show option to go the next level 
-
-            // select destination node to draw the carrot at 
-            const carrotNode = nodes.find(node => node.label.toLowerCase().includes('carrot'));
-            
             // show carrot, then showCongratsModal after the delay
-            showCarrot(carrotNode).then(() => {
+            showCarrot(carrotNode, 5).then(() => {
                 showCongratsModal();
             });
-
-            //showCongratsModal();
         }
         else {
             // challenge level game progression logic 
-            challenge_showNextPuzzle();
+            showCarrot(carrotNode, 1).then(() => {
+                challenge_showNextPuzzle();
+            });
+            
         }
     }
 
@@ -614,7 +614,7 @@ document.addEventListener("DOMContentLoaded", function() {
         
     }
 
-    function showCarrot(node) {
+    function showCarrot(node, seconds) {
         return new Promise((resolve) => {
             // Create overlay to block user interaction
             const overlay = document.createElement('div');
@@ -664,7 +664,7 @@ document.addEventListener("DOMContentLoaded", function() {
             setTimeout(() => {
                 overlay.remove();
                 resolve(); // Resolve the promise to allow the next function to proceed
-            }, 5000); // 5 seconds
+            }, seconds * 1000); // seconds to display the carrot before proceeding 
         });
     }
     

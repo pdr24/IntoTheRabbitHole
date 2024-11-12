@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const algorithmHeader = document.querySelector(".dynapuff-title2");
         algorithmHeader.textContent = "Algorithm: " + algorithm.toUpperCase();
 
-        next_level_page = 'index.html';
+        next_level_page = 'challenge_level.html';
     }
     else {
         // error message if page id is not recognized 
@@ -562,11 +562,16 @@ document.addEventListener("DOMContentLoaded", function() {
     
     // displays good job message and shows play again and next level buttons 
     function carrotReached() {
-        // display success message 
-        calculateAndSaveMetrics();
+        // TODO: save data
+        calculateAndSaveMetrics(); // TODO: consider where this happens for challenge level... 
 
-        // show option to go the next level 
-        showCongratsModal();
+        if (curr_level != 7) {
+            // display success message and show option to go the next level 
+            showCongratsModal();
+        }
+        else {
+            // level 3 game progression logic 
+        }
     }
 
     // displays good job modal on screen 

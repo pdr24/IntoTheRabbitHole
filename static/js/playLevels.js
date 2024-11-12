@@ -60,10 +60,8 @@ document.addEventListener("DOMContentLoaded", function() {
         const algorithmHeader = document.querySelector(".dynapuff-title2");
         algorithmHeader.textContent = "Algorithm: " + algorithm.toUpperCase();
 
-        // create timer element to display the timer 
-        makeTimer();
+        next_level_page = 'index.html'; // temporary for testing purposes 
 
-        next_level_page = 'challenge_level.html';
     }
     else {
         // error message if page id is not recognized 
@@ -586,7 +584,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const modal = document.getElementById('congratulationsModal');
         modal.style.display = 'flex'; // Make the modal visible
     
-        if (curr_level == 3 || curr_level == 6) {
+        if (curr_level == 3 || curr_level == 6 || curr_level == 7) {
             // Play Again button functionality
             document.getElementById('playAgainButton').addEventListener('click', function() {
                 resetLevel();  // Call function to reset the current level
@@ -626,7 +624,6 @@ document.addEventListener("DOMContentLoaded", function() {
         timerElement.style.fontSize = '2vh';
         timerElement.style.fontFamily = 'DynaPuff';
         timerElement.style.color = 'white';
-        timerElement.textContent = '90s';
     
         // Add outline and background color
         timerElement.style.border = '2px solid black'; 
@@ -654,7 +651,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
     
-
+    // start next iteration of the challenge level by restarting the level as needed 
     function challenge_showNextPuzzle() {
 
         // pick next puzzle's algorithm at random
@@ -670,8 +667,25 @@ document.addEventListener("DOMContentLoaded", function() {
         // show next puzzle 
         challenge_resetScreen();
 
+        updateScoreboardDisplay();
+
     }
 
+    // update scoreboard display  
+    function updateScoreboardDisplay(newScore) {
+        var scoreboardElement = document.getElementById('scoreboard');
+
+        if (scoreboardElement) {
+            // if new score not provided, increment the current score 
+            if (newScore == null) {
+                newScore = Number(scoreboardElement.innerText.substring(scoreboardElement.innerText.indexOf(':') + 2)) + 1;
+            }
+            // display the new score 
+            scoreboardElement.innerText = 'Score: ' + newScore;
+        }
+    }
+
+    // reset screen and load next puzzle for challenge level 
     function challenge_resetScreen() {
         // Clear the canvas and button container
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -714,6 +728,36 @@ document.addEventListener("DOMContentLoaded", function() {
     
         console.log("Level restarted");
         
+    }
+
+    // create div to display the user's score for the challenge level 
+    function makeChallengeScoreBoard() {
+        // Display scoreboard element
+        var scoreboardElement = document.createElement('div');
+        scoreboardElement.id = 'scoreboard';
+        scoreboardElement.style.position = 'absolute';
+        scoreboardElement.style.left = '15%';
+        scoreboardElement.style.top = '3%';
+        scoreboardElement.style.fontSize = '2vh';
+        scoreboardElement.style.fontFamily = 'DynaPuff';
+        scoreboardElement.style.color = 'white';
+    
+        // Add outline and background color
+        scoreboardElement.style.border = '2px solid black'; 
+        scoreboardElement.style.backgroundColor = 'rgba(0, 0, 0, 0.9)'; 
+        scoreboardElement.style.borderRadius = '10%'; // Make the border radius 50% to create a circle
+    
+        // Set width and height to ensure it's a circle
+        scoreboardElement.style.width = '14vh'; 
+        scoreboardElement.style.height = '8vh'; 
+    
+        // Center the text vertically and horizontally
+        scoreboardElement.style.display = 'flex';
+        scoreboardElement.style.alignItems = 'center';
+        scoreboardElement.style.justifyContent = 'center';
+    
+        // Append the timer element to the document body
+        document.body.appendChild(scoreboardElement);
     }
 
     // TODO: implement this 
@@ -764,6 +808,37 @@ document.addEventListener("DOMContentLoaded", function() {
     var userAllClicks = []; // stores all the clicks the user has made 
     var userCorrectClicks = []; // stores the correct clicks (for comparison with the path to see what the user's next click should be)
     var currIndex = 1; // start at 1 b/c path has 'Start' at index = 0 
+    var challenge_numCorrectPuzzles_completed = 0; // number of puzzles perfectly completed in the challenge level
+
+    // start timer logic if on the challenge level 
+    if (curr_level == 7) {
+        // make scoreboard display div 
+        makeChallengeScoreBoard();
+        // set the initial score to 0 
+        updateScoreboardDisplay(0); 
+
+        // create timer element to display the timer 
+        makeTimer();
+        secondsLeft = 15; // timer starts at 15 seconds (for now)
+        updateTimerDisplay(secondsLeft);
+
+        var timerInterval = setInterval(function() {
+            secondsLeft--; // Decrement the time
+            updateTimerDisplay(secondsLeft); // Update the timer display
+    
+            if (secondsLeft <= 0) {
+                clearInterval(timerInterval); // Stop the timer when time is up
+                showCongratsModal();
+            }
+        }, 1000); // Update timer every second
+    
+        // Return a promise that resolves after the timer is done
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve();
+            }, secondsLeft * 1000); // Resolve the promise after the specified time
+        });
+    }
 
 });
 

@@ -78,6 +78,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const carrotContainer = document.querySelector('.carrot-container'); // Get carrot container
 
+    const instructionsContainer = document.querySelector('.instructions-container'); // get the instructions container
 
     const errorContainer = document.querySelector('.error-message-div'); // Get button container
 
@@ -655,11 +656,32 @@ document.addEventListener("DOMContentLoaded", function() {
             carrotImage.style.left = `${scaledX - imageSize / 2}px`;
             carrotImage.style.top = `${scaledY - imageSize / 2}px`;
             carrotImage.style.zIndex = '5';
+
+            // add carrot found message to overlay 
+            const congratsButton = document.createElement('button');
+            congratsButton.style.width = '60vh';
+            congratsButton.style.height = '60vh';
+            congratsButton.style.position = 'absolute';
+            congratsButton.style.left = '7%';
+            congratsButton.style.top = '25%';
+            congratsButton.style.transform = 'rotate(-5deg)'; // Adjust the angle as needed
+            congratsButton.textContent = 'Carrot found!';
+            congratsButton.style.fontFamily = 'DynaPuff';
+            congratsButton.style.fontSize = '10vh';
+            congratsButton.style.backgroundColor = 'rgba(73, 138, 12, 1.0)';
+            congratsButton.style.borderRadius = '10%';
+            congratsButton.style.pointerEvents = 'none'; // Disables all mouse interactions
+            congratsButton.style.cursor = 'default'; // Sets cursor to default, preventing pointer indication
+
+            // hide the instructions container 
+            instructionsContainer.style.display = 'none';
     
-            // Append the image to the overlay
-            //overlay.appendChild(carrotImage)
+            // append congrats carrot found to overlay 
+            overlay.appendChild(congratsButton);
+
             // append image to carrot container
             carrotContainer.appendChild(carrotImage);
+
             // append overlay to prevent user from clicking stuff 
             document.body.appendChild(overlay);
     

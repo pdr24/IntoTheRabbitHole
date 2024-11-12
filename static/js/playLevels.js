@@ -569,7 +569,16 @@ document.addEventListener("DOMContentLoaded", function() {
 
         if (curr_level != 7) {
             // display success message and show option to go the next level 
-            showCongratsModal();
+
+            // select destination node to draw the carrot at 
+            const carrotNode = nodes.find(node => node.label.toLowerCase().includes('carrot'));
+            
+            // show carrot, then showCongratsModal after the delay
+            showCarrot(carrotNode).then(() => {
+                showCongratsModal();
+            });
+
+            //showCongratsModal();
         }
         else {
             // challenge level game progression logic 
@@ -581,7 +590,7 @@ document.addEventListener("DOMContentLoaded", function() {
     function showCongratsModal(score = null) {
         
         // TODO: show carrot found (either on the congrats message or separately beforehand)
-        
+
         const modal = document.getElementById('congratulationsModal');
         modal.style.display = 'flex'; // Make the modal visible
 
@@ -604,6 +613,65 @@ document.addEventListener("DOMContentLoaded", function() {
         });
         
     }
+
+    function showCarrot(node) {
+        return new Promise((resolve) => {
+            // Create overlay to block user interaction
+            const overlay = document.createElement('div');
+            overlay.style.position = 'fixed';
+            overlay.style.top = '0';
+            overlay.style.left = '0';
+            overlay.style.width = '100vw';
+            overlay.style.height = '100vh';
+            overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+            overlay.style.zIndex = '9999';
+            overlay.style.display = 'flex';
+            overlay.style.justifyContent = 'center';
+            overlay.style.alignItems = 'center';
+    
+            // Create the carrot image positioned at the specified node
+            const carrotImage = document.createElement('img');
+            carrotImage.src = 'static/assets/carrot.png'; // Update the path to your carrot image
+            carrotImage.alt = 'Carrot';
+    
+            // Get container dimensions for scaling
+            const containerWidth = buttonContainer.offsetWidth;
+            const containerHeight = buttonContainer.offsetHeight;
+            const originalWidth = 800;
+            const originalHeight = 600;
+    
+            // Scale and position the image based on the node’s position
+            const scaledX = (node.x / originalWidth) * containerWidth;
+            const scaledY = (node.y / originalHeight) * containerHeight;
+    
+            // Style the carrot image to match the node
+            const imageSize = nodeStyle.radius * 4; // Adjust size based on node radius
+            carrotImage.style.position = 'absolute';
+            carrotImage.style.width = `${imageSize}px`;
+            carrotImage.style.height = `${imageSize}px`;
+            carrotImage.style.left = `${scaledX - imageSize / 2}px`;
+            carrotImage.style.top = `${scaledY - imageSize / 2}px`;
+            carrotImage.style.zIndex = '5';
+    
+            // Append the image to the overlay
+            //overlay.appendChild(carrotImage)
+            // append image to button container
+            buttonContainer.appendChild(carrotImage);
+            // append overlay to prevent user from clicking stuff 
+            document.body.appendChild(overlay);
+    
+            // Wait for 5 seconds, then remove overlay and resolve the promise
+            setTimeout(() => {
+                overlay.remove();
+                resolve(); // Resolve the promise to allow the next function to proceed
+            }, 5000); // 5 seconds
+        });
+    }
+    
+
+    
+    
+    
     
     // restarts the level 
     function resetLevel() {

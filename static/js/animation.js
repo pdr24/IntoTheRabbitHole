@@ -5,6 +5,9 @@ document.addEventListener("DOMContentLoaded", function() {
     const pageBody = document.body;
     const pageId = pageBody.getAttribute('data-page-id');  // Get the page-specific id value
 
+    // start time in seconds 
+    var startTime = Math.floor(Date.now() / 1000); // number seconds since Jan 1, 1970
+
     if (pageId === 'dfs_animation') {
         algorithm = 'dfs'
         console.log("algorithm is " + algorithm);

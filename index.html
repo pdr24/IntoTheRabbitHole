@@ -48,7 +48,8 @@
         user_identifying_info = {
           fname : firstName,
           linitial : lastInitial,
-          gradelevel : gradeLevel
+          gradelevel : gradeLevel,
+          logintime : Math.floor(Date.now() / 1000) // current time in seconds (time since 1970)
         }
 
         localStorage.setItem('userinfo', JSON.stringify(user_identifying_info));

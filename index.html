@@ -42,12 +42,16 @@
     /**
      * Add new users to locally stored JSON object
     **/
-    function addUser(firstName, lastInitial, ageRange) {
+    function addUser(firstName, lastInitial, gradeLevel) {
         // TODO: check that this is working and implement other aspects of data collection and storage in browser cookies
         // TODO: once data is saved in cookies and someone signs out, email me the data if possible so it is not lost or overriden by the next user 
-        localStorage.setItem('fname', JSON.stringify(firstName));
-        localStorage.setItem('linitial', JSON.stringify(lastInitial));
-        localStorage.setItem('agerange', JSON.stringify(ageRange));
+        user_identifying_info = {
+          fname : firstName,
+          linitial : lastInitial,
+          gradelevel : gradeLevel
+        }
+
+        localStorage.setItem('userinfo', JSON.stringify(user_identifying_info));
     }
 
 
@@ -70,9 +74,9 @@
         <select id="input3" name="input3" required onchange="changeFontColor('input3')" 
           style="margin-right: 10vh; width: 13vw; height: 8vh; margin-bottom: 10px; font-size: 3vh; color: gray; left: 10%; border: 0.2vw solid rgba(73, 138, 12, 1); border-radius: 20px;">
           <option value="" style="font-size: 22px; color: gray;" disabled selected>Grade level</option>
-          <option value="1" style="font-size: 22px; color: gray;">6</option>
-          <option value="2" style="font-size: 22px; color: gray;">7</option>
-          <option value="3" style="font-size: 22px; color: gray;">8</option>
+          <option value="6" style="font-size: 22px; color: gray;">6</option>
+          <option value="7" style="font-size: 22px; color: gray;">7</option>
+          <option value="8" style="font-size: 22px; color: gray;">8</option>
        </select>
     </div>
 

@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function() {
         console.log("This is BFS Level 3");
         curr_level = 6;
         algorithm = 'bfs';
-        next_level_page = 'challenge_level.html';
+        next_level_page = 'challenge_level_intro.html';
     }
     else if (pageId == "challenge_level") {
         console.log("This is the challenge level");

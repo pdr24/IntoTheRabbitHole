@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Into the Rabbit Hole - Challenge Instructions</title>
+    <link rel="stylesheet" href="static/css/styles.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&display=swap" rel="stylesheet">
+</head>
+<body data-page-id="challenge_instructions">
+
+    <script type="module">    
+        window.startChallenge = function() {
+            // Redirect back to challenge level page 
+            window.location.href = "challenge_level.html";
+        }
+    </script>
+    
+    <img id="BackgroundImage" style="width: 100%; height: 100%; left: 0%; top: 0%; opacity: 50%; position: absolute" src="/static/assets/ITRH_Design_Background.png" alt="Background Image" /> 
+    
+    <div style="display: flex; gap: 1vh; justify-content: center; margin-top: 3vh; margin-bottom: 0vh;">
+        <button class="progressButtonComplete"></button>
+        <button class="progressButtonComplete"></button>
+        <button class="progressButtonComplete"></button>
+        <button class="progressButtonComplete"></button>
+        <button class="progressButtonComplete"></button>
+        <button class="progressButtonComplete"></button>
+        <button class="progressButtonComplete"></button>
+        <button class="progressButtonComplete"></button>
+        <button class="progressButtonComplete"></button>
+        <button class="progressButtonCurrent"></button>
+    </div>
+
+    <div style="width: 120vh; position: relative; margin: auto; display: flex; justify-content: center; align-items: center; height: 92vh;">
+        <div class="instructions-container" style="height: 65vh; top: -7%">   
+            <h2 style="font-family: DynaPuff; font-size: 8vh; margin-bottom: 0vh;">Time for a challenge level!</h2>
+
+            <p class="instructions-text">
+                Help the rabbit navigate as many tunnels as you can in 60 seconds. Make sure to use the algorithm mentioned on each puzzle! Aim for both speed AND accuracy!! 
+            </p>
+        </div>
+
+        <button class = "next-button" style="width: 25vh; height: 10vh; font-family: DynaPuff; top: 75%" onclick="startChallenge()">Start</button>
+
+    </div>
+
+    
+
+    
+</body>
+</html>

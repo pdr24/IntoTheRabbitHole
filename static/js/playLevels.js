@@ -7,6 +7,7 @@ var rabbitScaleFactor = 0.4; // scale factor to size rabbit image according to s
 var algorithm = ''; // stores the algorithm that should be used in the level 
 var path = null; // stores path for the current level 
 var next_level_page = null; // stores the next page to redirect to 
+var challengeLevelNumber = 0; // stores the iteration number of the challenge level the user is on 
 
 document.addEventListener("DOMContentLoaded", function() {
 
@@ -53,6 +54,9 @@ document.addEventListener("DOMContentLoaded", function() {
     else if (pageId == "challenge_level") {
         console.log("This is the challenge level");
         curr_level = 7;
+
+        // get challenge level play number 
+        challengeLevelNumber = localStorage.getItem('challenge_level_number');
 
         // pick algorithm at random
         let randAlgNum = Math.round(Math.random());
@@ -593,13 +597,14 @@ document.addEventListener("DOMContentLoaded", function() {
             console.log("Number of Correct Clicks:", userCorrectClicks.length);
             console.log("Number of Incorrect Clicks:", userAllClicks.length - userCorrectClicks.length);
             console.log("Carrot Node Label:", carrotNode.label);
-            savePuzzleData(algorithm, false, startTime, userAllClicks, userCorrectClicks.length, userAllClicks.length - userCorrectClicks.length, carrotNode.label);
+            savePuzzleData(algorithm, 0, startTime, userAllClicks, userCorrectClicks.length, userAllClicks.length - userCorrectClicks.length, carrotNode.label);
             
             showCongratsModal();
         }
         else {
             // challenge level game progression logic 
             showCarrot_challenge(carrotNode, 1).then(() => {
+                savePuzzleData(algorithm, challengeLevelNumber, startTime, userAllClicks, userCorrectClicks.length, userAllClicks.length - userCorrectClicks.length, carrotNode.label);
                 challenge_showNextPuzzle();
             });
             
@@ -616,6 +621,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
         if (score != null) {
             document.getElementById("userScore").textContent = "Score: " + score;
+        }
+
+        if (curr_level == 7) {
+            // update play number of challenge level number in case the user decides to play again 
+            localStorage.setItem('challenge_level_number', parseInt(challengeLevelNumber) + 1);
         }
     
         if (curr_level == 3 || curr_level == 6 || curr_level == 7) {
@@ -914,7 +924,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         if (scoreboardElement) {
             // get current score 
-            score = Number(scoreboardElement.innerText.substring(scoreboardElement.innerText.indexOf(':') + 2));
+            var score = Number(scoreboardElement.innerText.substring(scoreboardElement.innerText.indexOf(':') + 2));
             
             // return the current score 
             return score;
@@ -1056,7 +1066,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // create timer element to display the timer 
         makeTimer();
-        secondsLeft = challengeLevelLength; // timer starts at 15 seconds (for now)
+        var secondsLeft = challengeLevelLength; // timer starts at 15 seconds (for now)
         updateTimerDisplay(secondsLeft);
 
         var timerInterval = setInterval(function() {
@@ -1065,7 +1075,7 @@ document.addEventListener("DOMContentLoaded", function() {
     
             if (secondsLeft <= 0) {
                 clearInterval(timerInterval); // Stop the timer when time is up
-                score = getScoreFromScoreboard();
+                var score = getScoreFromScoreboard();
                 instructionsContainer.style.display = 'none'; // hide the instructions container 
                 showCongratsModal(score);
             }

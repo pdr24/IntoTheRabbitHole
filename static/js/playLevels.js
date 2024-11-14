@@ -2,7 +2,7 @@ import { savePuzzleData } from './dataCollection.js';
 // savePuzzleData(algorithm, isChallengeLevel, startTime, allUserClicks, numCorrectClicks, numIncorrectClicks, carrotLocation)
 
 var curr_level = 0; // keeps track of current level for use with game logic 
-var challengeLevelLength = 15; // stores timer length for challenge level in seconds 
+var challengeLevelLength = 60; // stores timer length for challenge level in seconds 
 var rabbitScaleFactor = 0.4; // scale factor to size rabbit image according to screen size
 var algorithm = ''; // stores the algorithm that should be used in the level 
 var path = null; // stores path for the current level 

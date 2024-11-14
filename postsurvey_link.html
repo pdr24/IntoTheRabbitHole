@@ -24,6 +24,11 @@
             // Redirect back to login page 
             window.location.href = "index.html";
         }
+
+        window.saveData = function() {
+            // save data to computer 
+            saveUserDataToComputer();
+        }
     </script>
     
 
@@ -46,7 +51,7 @@
     <div style="width: 120vh; position: relative; margin: auto; display: flex; justify-content: center; align-items: center; height: 92vh;">
         <div class="instructions-container" style="height: 50vh; top: -10%">            
             <p class="instructions-text" style="margin-top: 5%; ">
-                <a href="https://utsa.az1.qualtrics.com/jfe/form/SV_81eYGUcKmOSXXjE" target="_blank" style="color: blue; text-decoration: underline; font-family: DynaPuff; font-size: 8vh;">
+                <a href="https://utsa.az1.qualtrics.com/jfe/form/SV_81eYGUcKmOSXXjE" target="_blank" onclick="saveData()" style="color: blue; text-decoration: underline; font-family: DynaPuff; font-size: 8vh;">
                     Click here to take the post-survey!
                 </a>
             </p>

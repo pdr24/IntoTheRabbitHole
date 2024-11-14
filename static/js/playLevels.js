@@ -577,13 +577,16 @@ document.addEventListener("DOMContentLoaded", function() {
         if (curr_level != 7) {
             // display success message and show option to go the next level 
             // show carrot, then showCongratsModal after the delay
+            /*
             showCarrot(carrotNode, 5).then(() => {
                 showCongratsModal();
-            });
+            }); */
+            showCarrot(carrotNode, 5);
+            showCongratsModal();
         }
         else {
             // challenge level game progression logic 
-            showCarrot(carrotNode, 1).then(() => {
+            showCarrot_challenge(carrotNode, 1).then(() => {
                 challenge_showNextPuzzle();
             });
             
@@ -618,7 +621,7 @@ document.addEventListener("DOMContentLoaded", function() {
         
     }
 
-    function showCarrot(node, seconds) {
+    function showCarrot_old(node, seconds) {
         return new Promise((resolve) => {
             // Create overlay to block user interaction
             const overlay = document.createElement('div');
@@ -658,20 +661,30 @@ document.addEventListener("DOMContentLoaded", function() {
             carrotImage.style.zIndex = '5';
 
             // add carrot found message to overlay 
-            const congratsButton = document.createElement('button');
+            const congratsButton = document.createElement('div');
             congratsButton.style.width = '60vh';
             congratsButton.style.height = '60vh';
             congratsButton.style.position = 'absolute';
             congratsButton.style.left = '7%';
-            congratsButton.style.top = '25%';
+            congratsButton.style.top = '20%';
             congratsButton.style.transform = 'rotate(-5deg)'; // Adjust the angle as needed
-            congratsButton.textContent = 'Carrot found!';
+            congratsButton.style.paddingTop = '8vh';
+            congratsButton.textContent = 'Carrot found! Good job!';
             congratsButton.style.fontFamily = 'DynaPuff';
             congratsButton.style.fontSize = '10vh';
             congratsButton.style.backgroundColor = 'rgba(73, 138, 12, 1.0)';
             congratsButton.style.borderRadius = '10%';
-            congratsButton.style.pointerEvents = 'none'; // Disables all mouse interactions
-            congratsButton.style.cursor = 'default'; // Sets cursor to default, preventing pointer indication
+
+            const playAgain = document.createElement('button');
+            playAgain.style.width = '25vh';
+            playAgain.style.height = '10vh';
+            playAgain.textContent = 'Play Again';
+            playAgain.style.borderRadius = '2vh';
+            playAgain.style.fontFamily = 'DynaPuff';
+            playAgain.style.fontSize = '3vh';
+            playAgain.style.margin = '6vh';
+
+            congratsButton.append(playAgain);
 
             // hide the instructions container 
             instructionsContainer.style.display = 'none';
@@ -691,6 +704,106 @@ document.addEventListener("DOMContentLoaded", function() {
                 resolve(); // Resolve the promise to allow the next function to proceed
             }, seconds * 1000); // seconds to display the carrot before proceeding 
         });
+    }
+
+    function showCarrot_challenge(node, seconds) {
+        return new Promise((resolve) => {
+            // Create overlay to block user interaction
+            const overlay = document.createElement('div');
+            overlay.style.position = 'fixed';
+            overlay.style.top = '0';
+            overlay.style.left = '0';
+            overlay.style.width = '100vw';
+            overlay.style.height = '100vh';
+            overlay.style.backgroundColor = 'rgba(0, 0, 0, 0)';
+            overlay.style.zIndex = '9999';
+            overlay.style.display = 'flex';
+            overlay.style.justifyContent = 'center';
+            overlay.style.alignItems = 'center';
+    
+            // Create the carrot image positioned at the specified node
+            const carrotImage = document.createElement('img');
+            carrotImage.src = 'static/assets/carrot.png'; // Update the path to your carrot image
+            carrotImage.alt = 'Carrot';
+    
+            // Get container dimensions for scaling
+            const containerWidth = buttonContainer.offsetWidth;
+            const containerHeight = buttonContainer.offsetHeight;
+            const originalWidth = 800;
+            const originalHeight = 600;
+    
+            // Scale and position the image based on the node’s position
+            const scaledX = (node.x / originalWidth) * containerWidth;
+            const scaledY = (node.y / originalHeight) * containerHeight;
+    
+            // Style the carrot image to match the node
+            const imageSize = nodeStyle.radius * 3.2; // Adjust size based on node radius
+            carrotImage.style.position = 'absolute';
+            carrotImage.style.width = `${imageSize}px`;
+            carrotImage.style.height = `${imageSize}px`;
+            carrotImage.style.left = `${scaledX - imageSize / 2}px`;
+            carrotImage.style.top = `${scaledY - imageSize / 2}px`;
+            carrotImage.style.zIndex = '5';
+
+            // append image to carrot container
+            carrotContainer.appendChild(carrotImage);
+
+            // append overlay to prevent user from clicking stuff 
+            document.body.appendChild(overlay);
+    
+            // Wait for 5 seconds, then remove overlay and resolve the promise
+            setTimeout(() => {
+                overlay.remove();
+                carrotImage.remove(); // remove carrot from carrotContainer 
+                resolve(); // Resolve the promise to allow the next function to proceed
+            }, seconds * 1000); // seconds to display the carrot before proceeding 
+        });
+    }
+
+    function showCarrot(node, seconds) {
+        // Create overlay to block user interaction
+        const overlay = document.createElement('div');
+        overlay.style.position = 'fixed';
+        overlay.style.top = '0';
+        overlay.style.left = '0';
+        overlay.style.width = '100vw';
+        overlay.style.height = '100vh';
+        overlay.style.backgroundColor = 'rgba(0, 0, 0, 0)';
+        overlay.style.zIndex = '9999';
+        overlay.style.display = 'flex';
+        overlay.style.justifyContent = 'center';
+        overlay.style.alignItems = 'center';
+
+        // Create the carrot image positioned at the specified node
+        const carrotImage = document.createElement('img');
+        carrotImage.src = 'static/assets/carrot.png'; // Update the path to your carrot image
+        carrotImage.alt = 'Carrot';
+
+        // Get container dimensions for scaling
+        const containerWidth = buttonContainer.offsetWidth;
+        const containerHeight = buttonContainer.offsetHeight;
+        const originalWidth = 800;
+        const originalHeight = 600;
+
+        // Scale and position the image based on the node’s position
+        const scaledX = (node.x / originalWidth) * containerWidth;
+        const scaledY = (node.y / originalHeight) * containerHeight;
+
+        // Style the carrot image to match the node
+        const imageSize = nodeStyle.radius * 3.2; // Adjust size based on node radius
+        carrotImage.style.position = 'absolute';
+        carrotImage.style.width = `${imageSize}px`;
+        carrotImage.style.height = `${imageSize}px`;
+        carrotImage.style.left = `${scaledX - imageSize / 2}px`;
+        carrotImage.style.top = `${scaledY - imageSize / 2}px`;
+        carrotImage.style.zIndex = '5';
+
+        // hide the instructions container 
+        instructionsContainer.style.display = 'none';
+
+        // append image to carrot container
+        carrotContainer.appendChild(carrotImage);
+    
     }
     
 
@@ -939,6 +1052,7 @@ document.addEventListener("DOMContentLoaded", function() {
             if (secondsLeft <= 0) {
                 clearInterval(timerInterval); // Stop the timer when time is up
                 score = getScoreFromScoreboard();
+                instructionsContainer.style.display = 'none'; // hide the instructions container 
                 showCongratsModal(score);
             }
         }, 1000); // Update timer every second

@@ -9,9 +9,25 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&display=swap" rel="stylesheet">
-
 </head>
 <body data-page-id="postsurvey_link">
+
+    <script type = "module" src="static/js/dataCollection.js"></script>
+
+    <script type="module">
+        import { saveUserDataToComputer } from './static/js/dataCollection.js';
+    
+        window.logout = function() {
+            // Save data to computer 
+            saveUserDataToComputer();
+    
+            // Redirect back to login page 
+            window.location.href = "index.html";
+        }
+    </script>
+    
+
+    
     <img id="BackgroundImage" style="width: 100%; height: 100%; left: 0%; top: 0%; opacity: 50%; position: absolute" src="/static/assets/ITRH_Design_Background.png" alt="Background Image" /> 
     
     <div style="display: flex; gap: 1vh; justify-content: center; margin-top: 3vh; margin-bottom: 0vh;">
@@ -36,9 +52,12 @@
             </p>
         </div>
 
-        <button class = "next-button" style="width: 25vh; height: 10vh; font-family: DynaPuff; top: 70%">Logout</button>
+        <button class = "next-button" style="width: 25vh; height: 10vh; font-family: DynaPuff; top: 70%" onclick="logout()">Logout</button>
 
     </div>
+
+    
+
     
 </body>
 </html>

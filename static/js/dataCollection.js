@@ -165,4 +165,4 @@ function saveUserDataToComputer() {
     
 }
 
-export { getUserKey, saveAnimationPageTimeSpent, savePuzzleData };
+export { getUserKey, saveAnimationPageTimeSpent, savePuzzleData, saveUserDataToComputer };

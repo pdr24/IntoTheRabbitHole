@@ -60,13 +60,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // pick algorithm at random
         let randAlgNum = Math.round(Math.random());
-        let algorithms = ['Depth First Search', 'Breadth First Search']
+        let algorithms = ['dfs', 'bfs']
         algorithm = algorithms[randAlgNum]
+        let algorithmsFull = ['Depth First Search', 'Breadth First Search'];
         console.log("Randomly selected algorithm: " + algorithm)
         
         // update html text with selected algorithm
         const algorithmHeader = document.querySelector(".dynapuff-title2");
-        algorithmHeader.textContent = "Algorithm: " + algorithm;
+        algorithmHeader.textContent = "Algorithm: " + algorithmsFull[randAlgNum];
 
         let colors = ['rgba(73, 138, 12, 0.9)', 'rgba(255,182,104, 0.9)'];
         let color = colors[randAlgNum];
@@ -897,10 +898,17 @@ document.addEventListener("DOMContentLoaded", function() {
         let algorithms = ['dfs', 'bfs']
         algorithm = algorithms[randAlgNum]
         console.log("Randomly selected algorithm: " + algorithm)
+        let algorithmsFull = ['Depth First Search', 'Breadth First Search'];
         
         // update html text with selected algorithm
         const algorithmHeader = document.querySelector(".dynapuff-title2");
-        algorithmHeader.textContent = "Algorithm: " + algorithm.toUpperCase();
+        algorithmHeader.textContent = "Algorithm: " + algorithmsFull[randAlgNum];
+
+        let colors = ['rgba(73, 138, 12, 0.9)', 'rgba(255,182,104, 0.9)'];
+        let color = colors[randAlgNum];
+
+        const instructionsContainerBox = document.querySelector('.instructions-container');
+        instructionsContainerBox.style.backgroundColor = color;
 
         // show next puzzle 
         challenge_resetScreen();

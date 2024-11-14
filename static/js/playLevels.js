@@ -1,3 +1,6 @@
+import { savePuzzleData } from './dataCollection.js';
+// savePuzzleData(algorithm, isChallengeLevel, startTime, allUserClicks, numCorrectClicks, numIncorrectClicks, carrotLocation)
+
 var curr_level = 0; // keeps track of current level for use with game logic 
 var challengeLevelLength = 15; // stores timer length for challenge level in seconds 
 var rabbitScaleFactor = 0.4; // scale factor to size rabbit image according to screen size
@@ -582,6 +585,16 @@ document.addEventListener("DOMContentLoaded", function() {
                 showCongratsModal();
             }); */
             showCarrot(carrotNode, 5);
+
+            console.log("Algorithm:", algorithm);
+            console.log("Is Challenge Level:", false);
+            console.log("Start Time:", startTime);
+            console.log("All User Clicks:", userAllClicks);
+            console.log("Number of Correct Clicks:", userCorrectClicks.length);
+            console.log("Number of Incorrect Clicks:", userAllClicks.length - userCorrectClicks.length);
+            console.log("Carrot Node Label:", carrotNode.label);
+            savePuzzleData(algorithm, false, startTime, userAllClicks, userCorrectClicks.length, userAllClicks.length - userCorrectClicks.length, carrotNode.label);
+            
             showCongratsModal();
         }
         else {
@@ -1028,6 +1041,7 @@ document.addEventListener("DOMContentLoaded", function() {
     loadRabbitToStart(puzzle);  
 
     // store some user data before it is loaded into the browser's cookies 
+    var startTime = Math.floor(Date.now() / 1000); // start time in number seconds since Jan 1, 1970
     var userAllClicks = []; // stores all the clicks the user has made 
     var userCorrectClicks = []; // stores the correct clicks (for comparison with the path to see what the user's next click should be)
     var currIndex = 1; // start at 1 b/c path has 'Start' at index = 0 

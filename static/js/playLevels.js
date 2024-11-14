@@ -60,16 +60,20 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // pick algorithm at random
         let randAlgNum = Math.round(Math.random());
-        let algorithms = ['dfs', 'bfs']
+        let algorithms = ['Depth First Search', 'Breadth First Search']
         algorithm = algorithms[randAlgNum]
         console.log("Randomly selected algorithm: " + algorithm)
         
         // update html text with selected algorithm
         const algorithmHeader = document.querySelector(".dynapuff-title2");
-        algorithmHeader.textContent = "Algorithm: " + algorithm.toUpperCase();
+        algorithmHeader.textContent = "Algorithm: " + algorithm;
+
+        let colors = ['rgba(73, 138, 12, 0.9)', 'rgba(255,182,104, 0.9)'];
+        let color = colors[randAlgNum];
 
         next_level_page = 'postsurvey_link.html'; // temporary for testing purposes 
-
+        const instructionsContainerBox = document.querySelector('.instructions-container');
+        instructionsContainerBox.style.backgroundColor = color;
     }
     else {
         // error message if page id is not recognized 

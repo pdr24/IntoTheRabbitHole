@@ -1,3 +1,5 @@
+import { getUserKey, saveAnimationPageTimeSpent } from './dataCollection.js';
+
 // to read and update page
 var algorithm = ''; 
 
@@ -23,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const rabbitCanvas = document.getElementById('rabbit-canvas');
     const rabbitCtx = rabbitCanvas.getContext('2d');
 
-    pathColor = "orange";
+    var pathColor = "orange";
 
     // Adjust canvas size dynamically or use fixed size
     canvas.width = 800;  // Increased width for larger graph
@@ -190,7 +192,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
     drawGraph();
     drawRabbit(100, 100);
-    // Start the DFS traversal animation
+    // Start the traversal animation
     moveRabbit();
+
+    document.querySelector('.next-button').onclick = function(event) {
+        //event.preventDefault();  // to delay navigation until after the function proceeds
+        saveAnimationPageTimeSpent(startTime, algorithm); // save time spent on this page 
+    };
 
 });

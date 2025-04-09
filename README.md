@@ -4,7 +4,7 @@ __Link to live version:__ https://pdr24.github.io/IntoTheRabbitHole/
 
 __Post-Survey Link:__  https://utsa.az1.qualtrics.com/jfe/form/SV_81eYGUcKmOSXXjE
 
-__Paper Link:__ Coming soon!
+__Paper Link:__ *Coming soon!*
 
 
 ## Overview

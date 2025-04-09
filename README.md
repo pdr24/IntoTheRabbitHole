@@ -4,11 +4,16 @@ __Link to live version:__ https://pdr24.github.io/IntoTheRabbitHole/
 
 __Post-Survey Link:__  https://utsa.az1.qualtrics.com/jfe/form/SV_81eYGUcKmOSXXjE
 
+__Paper Link:__ Coming soon!
+
+
 ## Overview
 
 IntoTheRabbitHole was developed by Pragathi Durga Rajarajan in the Engaging Computing Group at the University of Texas at San Antonio under the guidance of Dr. Fred Martin. It is a software tool for teaching middle school children about Depth First Search (DFS) and Breadth First Search (BFS) in an interactive format. It introduces children to DFS and BFS through animations, and then has the children help a character rabbit find its hidden carrot using DFS and BFS. 
 
 IntoTheRabbitHole's graphs represent real-world tunnels so the rabbit (as agent) adheres to real-world logic. For instance, in IntoTheRabbitHole's DFS/BFS traversal, the rabbit can only move between nodes directly connected by an edge. The backtracking the rabbit must follow in IntoTheRabbitHole adds complexity to DFS/BFS paths but was retained as a useful abstraction to introduce DFS/BFS at a high-level.
+
+*A full paper on IntoTheRabbitHole has been accepted to ITiCSE 2025*
 
 ## Using IntoTheRabbitHole
 

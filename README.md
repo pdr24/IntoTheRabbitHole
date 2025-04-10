@@ -17,7 +17,7 @@ IntoTheRabbitHole's graphs represent real-world tunnels so the rabbit (as agent)
 
 ## Using IntoTheRabbitHole
 
-IntoTheRabbitHole can be accessed through the live link at the top of this README. Alternatively, our repository can be cloned and opened in Visual Studio Code, where you can then open index.html in a browser using the 'Live Server' extension. 
+IntoTheRabbitHole can be accessed through the live link at the top of this README. Alternatively, our repository can be cloned and opened in Visual Studio Code, where you can then open index.html in a browser using the 'Live Server' extension. IntoTheRabbitHole works best on computers.
 
 ## Limitations 
 
